@@ -1,64 +1,95 @@
-# Skills
+# Agent Skills Toolkit
 
-A collection of advanced agent skills.
+A framework for packaging business logic as discoverable, composable agent skills — served via MCP to Claude Code, Codex, GitHub Copilot, and other AI coding agents.
 
-## Available Skills
+Skills can encode expertise from **any domain**: DevOps, security, data engineering, finance, compliance, and more. Each skill is a self-contained instruction package that an agent loads at runtime to perform complex, multi-step tasks safely.
 
-### DevOps
+## Quick Start
 
-| Skill                                                  | Description                                                                                                                                                                                                                                                                                        |
-| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [aws-eks-updater](devops/aws-eks-updater/SKILL.md)     | Interactive, safety-first skill for updating an AWS EKS cluster. Verifies prerequisites, inventories the cluster from Terraform definitions, AWS-managed add-ons, and Helm releases, then walks through updates one package at a time with changelog scanning for breaking changes.                |
-| [azure-aks-updater](devops/azure-aks-updater/SKILL.md) | Interactive, safety-first skill for updating an Azure AKS cluster. Verifies prerequisites, inventories the cluster from Terraform definitions, Azure-managed add-ons/extensions, and Helm releases, then walks through updates one package at a time with changelog scanning for breaking changes. |
+### Claude Code
 
-## Structure
-
-```
-devops/
-  aws-eks-updater/    # AWS EKS cluster update skill
-    SKILL.md          # Skill definition and instructions
-    agents/           # Sub-agent prompts
-    assets/           # Report templates
-    references/       # Reference data (breaking-change keywords, EKS compatibility)
-    tools/            # Python helper scripts
-  azure-aks-updater/  # Azure AKS cluster update skill
-    SKILL.md          # Skill definition and instructions
-    agents/           # Sub-agent prompts
-    assets/           # Report templates
-    references/       # Reference data (breaking-change keywords, AKS compatibility)
-    tools/            # Python helper scripts
-```
-
-## How to Use
-
-### 1. Clone the repository
+Install a plugin (e.g. the DevOps plugin — one of the available plugins):
 
 ```bash
-git clone https://github.com/PaperBackPear3/skills.git ~/skills
+claude plugin add github:PaperBackPear3/skills/plugins/devops-core
 ```
 
-### 2. Symlink the skill(s) you want
+### Codex
 
-Pick any skill from this repo and symlink it into your agent skills folder.
+```json
+{ "plugins": ["github:PaperBackPear3/skills/plugins/devops-core"] }
+```
 
-#### GitHub Copilot (VS Code)
+### Manual (any agent)
 
-Skills live in `~/.agents/skills/`. Create the directory if it doesn't exist:
+Copy a skill into your agent's skill directory:
 
 ```bash
-mkdir -p ~/.agents/skills
-ln -s ~/skills/devops/aws-eks-updater ~/.agents/skills/aws-eks-updater
-ln -s ~/skills/devops/azure-aks-updater ~/.agents/skills/azure-aks-updater
+cp -r skills/devops/aws-eks-updater ~/.agents/skills/
 ```
 
-#### Claude Code
+Or point your agent at the MCP server for dynamic skill discovery:
 
-Skills live in `~/.claude/skills/`. Create the directory if it doesn't exist:
-
-```bash
-mkdir -p ~/.claude/skills
-ln -s ~/skills/devops/aws-eks-updater ~/.claude/skills/aws-eks-updater
-ln -s ~/skills/devops/azure-aks-updater ~/.claude/skills/azure-aks-updater
+```json
+{
+  "mcpServers": {
+    "skills": {
+      "command": "python3",
+      "args": ["<path-to-repo>/mcp-server/server.py"]
+    }
+  }
+}
 ```
 
-After symlinking, the agent will automatically pick up the skill when your request matches its description. Each `SKILL.md` contains the full instructions the agent follows.
+## What's Included
+
+### Plugins
+
+| Plugin | Category | Description | Status |
+|--------|----------|-------------|--------|
+| `devops-core` | DevOps | Kubernetes cluster update skills (EKS + AKS) with MCP tools | ✅ Available |
+| _more coming_ | Security, Data, Finance… | Community and first-party plugins | 🚧 Planned |
+
+### Skills (via `devops-core`)
+
+| Skill | Description |
+|-------|-------------|
+| [`aws-eks-updater`](skills/devops/aws-eks-updater/SKILL.md) | Interactive, safety-first EKS cluster upgrades |
+| [`azure-aks-updater`](skills/devops/azure-aks-updater/SKILL.md) | Interactive, safety-first AKS cluster upgrades |
+
+### MCP Server
+
+The MCP server (`mcp-server/server.py`) exposes skills as tools, resources, and prompts — making them discoverable by any MCP-compatible agent without manual installation.
+
+## Repository Structure
+
+> This layout is **extensible** — add new domains by creating a directory under `skills/` and a corresponding plugin under `plugins/`.
+
+```
+.claude-plugin/         # Claude Code marketplace index
+.agents/plugins/        # Kiro/generic agent marketplace index
+plugins/                # Installable plugin packages
+  devops-core/          #   └─ DevOps plugin (skills + MCP config)
+skills/                 # Canonical skill definitions
+  devops/               #   └─ DevOps skills (EKS, AKS)
+    aws-eks-updater/
+    azure-aks-updater/
+rules/                  # Agent behavior rules
+mcp-server/             # MCP server implementation
+docs/                   # Documentation
+```
+
+## Documentation
+
+| Doc | What it covers |
+|-----|---------------|
+| [Installation Guide](docs/INSTALL.md) | All install methods (plugin, MCP, manual, symlink) |
+| [Contributing: Add New Stuff](docs/CONTRIBUTING.md) | How to add skills, tools, plugins, rules |
+| [Quick Reference Guide](docs/GUIDE.md) | Architecture, concepts, conventions |
+| [Best Practices](docs/BEST_PRACTICES.md) | MCP vs Agents vs Tools vs Skills deep-dive |
+| [MCP Server](mcp-server/README.md) | Server setup and available tools |
+| [Agent Rules](rules/devops-agent-rules.md) | Behavioral guardrails |
+
+## License
+
+MIT

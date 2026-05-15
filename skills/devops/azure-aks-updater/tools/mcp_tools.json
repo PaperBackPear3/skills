@@ -1,0 +1,36 @@
+{
+  "tools": [
+    {
+      "name": "aks_inventory_addons",
+      "script": "inventory_addons.py",
+      "description": "Inventory installed AKS add-ons for a cluster via Azure API.",
+      "params": [
+        { "name": "cluster", "flag": "--cluster", "required": true, "description": "AKS cluster name" },
+        { "name": "resource_group", "flag": "--resource-group", "required": true, "description": "Azure resource group" },
+        { "name": "subscription", "flag": "--subscription", "required": false, "description": "Azure subscription ID" }
+      ]
+    },
+    {
+      "name": "aks_scan_terraform",
+      "script": "scan_terraform_aks.py",
+      "description": "Scan Terraform files for AKS resource definitions and versions.",
+      "params": [
+        { "name": "root_dir", "flag": "--root-dir", "required": true, "description": "Terraform root directory" }
+      ]
+    },
+    {
+      "name": "inventory_helm",
+      "script": "inventory_helm.py",
+      "description": "Inventory Helm releases in the current kubeconfig context.",
+      "params": []
+    },
+    {
+      "name": "check_prereqs",
+      "script": "check_prereqs.py",
+      "description": "Check prerequisites (CLIs, auth) for Azure AKS operations.",
+      "params": [
+        { "name": "profile", "flag": "--profile", "required": false, "description": "Azure CLI subscription" }
+      ]
+    }
+  ]
+}

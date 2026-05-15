@@ -1,52 +1,69 @@
 # Copilot Instructions
 
-## Repository Overview
+## What This Repository Is
 
-This is a collection of **agent skills** — self-contained instruction packages that AI coding agents (GitHub Copilot, Claude Code) load at runtime to perform complex DevOps tasks. There is no application code, no build system, and no tests. The deliverables are Markdown prompts, Python helper scripts, and HTML report templates.
+A **framework for packaging business logic as discoverable agent skills**. Skills are self-contained instruction packages that AI agents load at runtime to perform complex, multi-step tasks. The MCP server makes skills discoverable and exposes their tools to any MCP-compatible client.
 
-Skills are installed by symlinking a skill directory into the agent's skills folder (e.g., `~/.agents/skills/` for Copilot, `~/.claude/skills/` for Claude Code). The agent discovers a skill via the YAML frontmatter (`name`, `description`) in its `SKILL.md`.
+This is NOT an application. There is no build system, no runtime code, no tests. The deliverables are: Markdown playbooks, Python helper scripts, JSON manifests, and HTML templates.
 
-## Architecture
-
-Each skill follows an identical structure:
+## Repository Structure
 
 ```
-devops/<skill-name>/
-  SKILL.md              # Entry point — YAML frontmatter + phase-based playbook
-  agents/               # Sub-agent prompts (delegated via fan-out)
-  assets/               # HTML report templates (Mustache-style {{placeholders}})
-  references/           # Static reference data (compatibility matrices, keyword lists)
-  tools/                # Python helper scripts (run by the agent at runtime)
+skills/<category>/<skill-name>/     ← Canonical skill content
+  SKILL.md                          ← Entry point (YAML frontmatter + phases)
+  tools/                            ← Python scripts (optional, exposed via MCP)
+    mcp_tools.json                  ← Tool declarations for auto-discovery
+  references/                       ← Reference data (auto-exposed as MCP resources)
+  agents/                           ← Sub-agent prompts for fan-out work
+  assets/                           ← Report templates
+plugins/<plugin-name>/              ← Installable bundles for agent marketplaces
+  .claude-plugin/plugin.json
+  .codex-plugin/plugin.json
+  .mcp.json
+  skills/                           ← Symlinks to canonical skills
+rules/                              ← Agent behavior rules (per-domain)
+mcp-server/server.py                ← Auto-discovering MCP server
+skills/manifest.json                ← Machine-readable skill catalog
+docs/                               ← Framework documentation
 ```
 
-### SKILL.md conventions
+## How to Work in This Repo
 
-- Starts with YAML frontmatter: `name` and `description` fields (used for skill discovery).
-- Body is a **phase-based playbook** (PHASE 0 through PHASE 6) that the agent follows linearly.
-- Contains a "hard rules" section at the top with safety constraints.
-- Ends with a "Files in this skill" inventory listing every file and its purpose.
+### Adding a new skill
 
-### Sub-agents (`agents/`)
+1. `mkdir -p skills/<category>/<name>/{tools,references}`
+2. Write `SKILL.md` — must have YAML frontmatter with `name`, `description` (include "Use when..." and "Do NOT use for...")
+3. Optionally add `tools/mcp_tools.json` to expose scripts as MCP tools
+4. Register in `skills/manifest.json`
+5. Validate: `python3 -c "import json; json.load(open('skills/manifest.json'))"`
 
-Each file is a standalone Markdown prompt given to a sub-agent for parallel fan-out work (e.g., `changelog-researcher.md` fetches changelogs from multiple GitHub repos concurrently via the GitHub MCP server).
+### Adding a new MCP tool
 
-### Tools (`tools/`)
+1. Write a Python script in `skills/<category>/<skill>/tools/` — prints JSON to stdout, uses argparse, stdlib only
+2. Add entry to that skill's `tools/mcp_tools.json`
+3. MCP server auto-discovers on restart
 
-Python scripts executed by the agent during specific phases. They are CLI tools that print structured output (typically JSON or plain text) for the agent to parse. Common scripts across skills:
+### Adding a new plugin
 
-- `check_prereqs.py` — Validates required CLIs and auth (cloud provider, kubectl, helm, terraform).
-- `scan_terraform_*.py` — Parses Terraform files to inventory declared resources and versions.
-- `inventory_addons.py` — Queries the cloud provider API for installed add-on versions.
-- `inventory_helm.py` — Queries Helm for installed release versions.
-- `generate_report.py` — Renders HTML reports from templates in `assets/`.
+1. Create `plugins/<name>/` with `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.mcp.json`
+2. Symlink skills into `plugins/<name>/skills/`
+3. Register in `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json`
 
-### Report templates (`assets/`)
+## Conventions — Follow These
 
-HTML files with `{{PLACEHOLDER}}` tokens. Two per skill: `plan_template.html` (pre-update plan) and `summary_template.html` (post-update summary).
+- **SKILL.md frontmatter is sacred** — `name` (kebab-case, unique), `description` (verb phrase + triggers + exclusions), `version` (integer)
+- **Tools are namespaced** — `<category>__<tool_name>` (double underscore)
+- **Resources auto-discovered** — anything in `references/` or `assets/` becomes an MCP resource
+- **Safety-first** — skills never apply changes without user confirmation
+- **Stdlib only** — Python scripts use no external dependencies
+- **One concern per skill** — don't combine unrelated workflows in one SKILL.md
+- **Phases are linear** — agents work through phases sequentially, one per turn
+- **Description quality matters** — agents route to skills based on the description field; write it like trigger documentation
 
-## Key Conventions
+## What NOT to Do
 
-- **Safety-first**: Skills never apply changes without explicit user confirmation. Updates are proposed one package at a time.
-- **Mirror structure**: Both skills (`aws-eks-updater`, `azure-aks-updater`) follow the exact same directory layout, phase structure, and naming patterns. When adding a new skill or modifying an existing one, maintain this symmetry.
-- **No dependencies to install**: Python scripts use only the standard library. No `requirements.txt` or virtual environment needed.
-- **No CI/CD, no tests, no linting**: This repo has no build pipeline. Validation is manual.
+- Don't add `requirements.txt` or external Python dependencies to tool scripts
+- Don't put orchestration logic in MCP tools (keep them stateless)
+- Don't create skills without registering in `manifest.json`
+- Don't hardcode tool registrations in `server.py` — use `mcp_tools.json`
+- Don't mix domains in one skill — create separate skills per concern

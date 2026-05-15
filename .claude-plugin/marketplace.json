@@ -1,0 +1,18 @@
+{
+  "name": "skills",
+  "metadata": {
+    "description": "A framework for discoverable agent skills — package business logic as composable, MCP-served capabilities",
+    "version": "1.0.0"
+  },
+  "owner": { "name": "PaperBackPear3" },
+  "plugins": [
+    {
+      "name": "devops-core",
+      "description": "Kubernetes cluster update skills (EKS + AKS) with MCP tools",
+      "source": "./plugins/devops-core",
+      "version": "1.0.0",
+      "category": "devops",
+      "keywords": ["devops", "kubernetes", "eks", "aks"]
+    }
+  ]
+}

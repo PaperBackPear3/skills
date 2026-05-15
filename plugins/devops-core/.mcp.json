@@ -2,7 +2,7 @@
   "mcpServers": {
     "devops-skills": {
       "command": "python3",
-      "args": ["../../mcp-server/server.py"]
+      "args": ["./mcp-server/server.py"]
     }
   }
 }

@@ -12,6 +12,16 @@ description: >
   pod-identity-agent, adot, cloudwatch-observability), upgrading Helm releases on EKS,
   checking EKS/add-on compatibility, or planning a control-plane minor bump — even without
   the word "EKS" when context (eksctl, aws-auth configmap, terraform `aws_eks_*`) is clear.
+version: 1
+requires_tools:
+  - devops__eks_inventory_addons
+  - devops__eks_scan_terraform
+  - devops__inventory_helm
+  - devops__check_prereqs
+requires_mcp:
+  - terraform
+  - github
+tags: [aws, eks, kubernetes, terraform, helm]
 ---
 
 # EKS Cluster Updater

@@ -12,6 +12,16 @@ description: >
   azure-policy, gitops, open-service-mesh), upgrading AKS extensions, upgrading Helm releases
   on AKS, checking add-on compatibility, or planning a control-plane bump — even without
   "AKS" when context (az aks, azurerm_kubernetes_cluster, terraform `azurerm_aks_*`) is clear.
+version: 1
+requires_tools:
+  - devops__aks_inventory_addons
+  - devops__aks_scan_terraform
+  - devops__inventory_helm
+  - devops__check_prereqs
+requires_mcp:
+  - terraform
+  - github
+tags: [azure, aks, kubernetes, terraform, helm]
 ---
 
 # AKS Cluster Updater

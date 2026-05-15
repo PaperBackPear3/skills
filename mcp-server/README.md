@@ -77,6 +77,35 @@ Add to `claude_desktop_config.json`:
 | `skills://eks/report-templates` | EKS HTML report templates |
 | `skills://aks/report-templates` | AKS HTML report templates |
 
+## Adding Tools from New Skills
+
+To expose a new skill's tools via MCP, create a `tools/mcp_tools.json` file in the skill directory:
+
+```json
+{
+  "tools": [
+    {
+      "name": "my_tool_name",
+      "script": "my_script.py",
+      "description": "What this tool does.",
+      "params": [
+        { "name": "param_name", "flag": "--param-name", "required": true, "description": "Param description" }
+      ]
+    }
+  ]
+}
+```
+
+The MCP server auto-discovers these at startup. Tools are namespaced by category: `<category>__<tool_name>` (e.g., `devops__eks_inventory_addons`).
+
+### Adding Resources
+
+Any files in `references/` or `assets/` within a skill directory are automatically exposed as MCP resources with URI pattern:
+```
+skills://<category>/<skill-name>/references/<filename>
+skills://<category>/<skill-name>/assets/<filename>
+```
+
 ## Available Prompts
 
 | Prompt | Description | Arguments |

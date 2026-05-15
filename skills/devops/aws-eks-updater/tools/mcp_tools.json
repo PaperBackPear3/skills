@@ -1,0 +1,36 @@
+{
+  "tools": [
+    {
+      "name": "eks_inventory_addons",
+      "script": "inventory_addons.py",
+      "description": "Inventory installed EKS add-ons for a cluster via AWS API.",
+      "params": [
+        { "name": "cluster", "flag": "--cluster", "required": true, "description": "EKS cluster name" },
+        { "name": "region", "flag": "--region", "required": true, "description": "AWS region" },
+        { "name": "profile", "flag": "--profile", "required": false, "description": "AWS CLI profile" }
+      ]
+    },
+    {
+      "name": "eks_scan_terraform",
+      "script": "scan_terraform_eks.py",
+      "description": "Scan Terraform files for EKS resource definitions and versions.",
+      "params": [
+        { "name": "root_dir", "flag": "--root-dir", "required": true, "description": "Terraform root directory" }
+      ]
+    },
+    {
+      "name": "inventory_helm",
+      "script": "inventory_helm.py",
+      "description": "Inventory Helm releases in the current kubeconfig context.",
+      "params": []
+    },
+    {
+      "name": "check_prereqs",
+      "script": "check_prereqs.py",
+      "description": "Check prerequisites (CLIs, auth) for AWS EKS operations.",
+      "params": [
+        { "name": "profile", "flag": "--profile", "required": false, "description": "AWS CLI profile" }
+      ]
+    }
+  ]
+}

@@ -48,24 +48,11 @@ cp -r skills/<category>/* ~/.kiro/skills/
 
 ---
 
-## Option 2: MCP Server Only
+## Option 2: MCP Server via uvx
 
-Run the MCP server for tool access + runtime skill discovery. Your agent finds and loads skills dynamically — no local skill installation needed.
+Run the MCP server for tool access + runtime skill discovery. No clone needed — `uvx` runs it directly from PyPI.
 
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/PaperBackPear3/skills.git ~/skills
-```
-
-### 2. Install dependencies
-
-```bash
-cd ~/skills/mcp-server
-pip install -r requirements.txt
-```
-
-### 3. Configure your agent
+### Configure your agent
 
 Add to your agent's MCP config:
 
@@ -74,8 +61,8 @@ Add to your agent's MCP config:
 {
   "servers": {
     "skills-mcp": {
-      "command": "python3",
-      "args": ["/Users/you/skills/mcp-server/server.py"]
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
     }
   }
 }
@@ -86,8 +73,8 @@ Add to your agent's MCP config:
 {
   "mcpServers": {
     "skills-mcp": {
-      "command": "python3",
-      "args": ["/Users/you/skills/mcp-server/server.py"]
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
     }
   }
 }
@@ -98,16 +85,37 @@ Add to your agent's MCP config:
 {
   "mcpServers": {
     "skills-mcp": {
-      "command": "python3",
-      "args": ["/Users/you/skills/mcp-server/server.py"]
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
     }
   }
 }
 ```
 
-### 4. Verify
+Point at a custom skills directory with `--skills-dir`:
+```json
+{
+  "args": ["skills-mcp-server@latest", "--skills-dir", "/path/to/skills"]
+}
+```
+
+### Verify
 
 Ask your agent: *"List available skills"* — it should call `list_skills()` and show your installed skills.
+
+---
+
+## Option 2b: MCP Server via Docker (Local Development)
+
+For local development, run the MCP server in Docker:
+
+```bash
+git clone https://github.com/PaperBackPear3/skills.git ~/skills
+cd ~/skills
+docker compose up mcp-server
+```
+
+This builds the server and mounts `./skills` as a read-only volume. Skills changes are reflected immediately on restart.
 
 ---
 

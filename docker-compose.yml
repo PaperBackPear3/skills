@@ -1,0 +1,8 @@
+services:
+  mcp-server:
+    build:
+      context: .
+      dockerfile: mcp-server/Dockerfile
+    volumes:
+      - ./skills:/skills:ro
+    stdin_open: true

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "skills-mcp-server"
+version = "0.1.0"
+description = "Auto-discovering MCP server for agent skills"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "PaperBackPear3" },
+]
+dependencies = [
+    "mcp>=1.0.0",
+]
+
+[project.urls]
+Repository = "https://github.com/PaperBackPear3/skills"
+
+[project.scripts]
+skills-mcp-server = "server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+only-include = ["server.py"]

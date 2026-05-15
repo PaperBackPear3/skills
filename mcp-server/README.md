@@ -5,24 +5,68 @@ An MCP (Model Context Protocol) server that exposes skill tools as MCP tools, re
 ## Prerequisites
 
 - Python 3.10+
+- [uv](https://docs.astral.sh/uv/) (for `uvx` usage)
 - Domain-specific CLIs as needed by individual skills (e.g., `aws`, `az`, `kubectl`, `helm`, `terraform`)
 
 ## Installation
 
+### Option 1: uvx (Recommended)
+
+No install needed — `uvx` runs the server directly from PyPI:
+
+```json
+{
+  "mcpServers": {
+    "skills-mcp": {
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
+    }
+  }
+}
+```
+
+Pass `--skills-dir` to point at your skills directory:
+
+```json
+{
+  "mcpServers": {
+    "skills-mcp": {
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest", "--skills-dir", "/path/to/skills"]
+    }
+  }
+}
+```
+
+### Option 2: Docker (Local Development)
+
+From the repo root:
+
+```bash
+docker compose up mcp-server
+```
+
+This builds the server image and mounts `./skills` as a read-only volume. Configure your agent to use it with stdio transport.
+
+### Option 3: Run from source
+
 ```bash
 cd mcp-server
 pip install -r requirements.txt
-```
-
-## Running
-
-```bash
 python server.py
 ```
 
+Or with a custom skills directory:
+
+```bash
+python server.py --skills-dir /path/to/skills
+```
+
+The `SKILLS_DIR` environment variable is also supported.
+
 The server uses **stdio transport** (stdin/stdout) — it's designed to be launched by an MCP client.
 
-## Configuration
+## Configuration Examples
 
 ### VS Code (GitHub Copilot)
 
@@ -32,8 +76,8 @@ Add to your `.vscode/mcp.json` or user MCP settings:
 {
   "servers": {
     "skills-mcp": {
-      "command": "python",
-      "args": ["<path-to-repo>/mcp-server/server.py"],
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"],
       "transportType": "stdio"
     }
   }
@@ -48,8 +92,8 @@ Add to `claude_desktop_config.json`:
 {
   "mcpServers": {
     "skills-mcp": {
-      "command": "python",
-      "args": ["<path-to-repo>/mcp-server/server.py"]
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
     }
   }
 }

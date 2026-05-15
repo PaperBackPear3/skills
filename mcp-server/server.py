@@ -7,8 +7,10 @@ Resources are auto-discovered from skills/<category>/<skill>/references/ and ass
 Skill discovery (list_skills, retrieve_skill) is always available.
 """
 
+import argparse
 import asyncio
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -16,7 +18,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SKILLS_DIR = REPO_ROOT / "skills"
+SKILLS_DIR = None  # Set in main()
 
 server = FastMCP("skills-mcp-server")
 
@@ -244,9 +246,24 @@ def _register_dynamic_prompt(name: str, description: str, template: str, params:
 # --- Bootstrap and Entry Point ---
 
 
-_discover_and_register_tools()
-_discover_and_register_resources()
-_discover_and_register_prompts()
+def main():
+    global SKILLS_DIR
+    parser = argparse.ArgumentParser(description="Skills MCP Server")
+    parser.add_argument("--skills-dir", help="Path to skills directory")
+    args = parser.parse_args()
+
+    if args.skills_dir:
+        SKILLS_DIR = Path(args.skills_dir)
+    elif "SKILLS_DIR" in os.environ:
+        SKILLS_DIR = Path(os.environ["SKILLS_DIR"])
+    else:
+        SKILLS_DIR = REPO_ROOT / "skills"
+
+    _discover_and_register_tools()
+    _discover_and_register_resources()
+    _discover_and_register_prompts()
+    server.run()
+
 
 if __name__ == "__main__":
-    server.run()
+    main()

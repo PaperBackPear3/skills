@@ -1,0 +1,31 @@
+{
+  "prompts": [
+    {
+      "name": "workflow_design",
+      "description": "Design a GitHub Actions workflow architecture from requirements.",
+      "params": [
+        { "name": "requirements", "required": true, "description": "JSON describing the desired CI/CD pipeline (language, build steps, deploy targets, environments)" },
+        { "name": "existing_workflows", "required": false, "description": "JSON of existing workflows from scan_workflows output" }
+      ],
+      "template": "Design a GitHub Actions workflow architecture based on the following requirements.\n\n## Requirements\n```json\n{requirements}\n```\n\n## Existing Workflows (if any)\n```json\n{existing_workflows}\n```\n\nProduce:\n1. A list of workflow files to create/modify\n2. For each workflow: triggers, jobs, environment promotion strategy\n3. Reusable workflow extraction opportunities\n4. Security recommendations (OIDC, permissions, pinning)"
+    },
+    {
+      "name": "migration_plan",
+      "description": "Plan migration from another CI/CD system to GitHub Actions.",
+      "params": [
+        { "name": "source_config", "required": true, "description": "JSON from scan_ci_config output describing the source CI configuration" },
+        { "name": "target_requirements", "required": false, "description": "Additional requirements for the GitHub Actions target" }
+      ],
+      "template": "Plan a migration from an existing CI/CD system to GitHub Actions.\n\n## Source Configuration\n```json\n{source_config}\n```\n\n## Additional Target Requirements\n{target_requirements}\n\nFor each source stage/job, provide:\n1. The GitHub Actions equivalent (job, reusable workflow, or composite action)\n2. Required changes in approach (e.g., different caching, different artifact handling)\n3. Secrets and environment variables to configure\n4. Any features that have no direct equivalent and need manual handling\n\nProduce a step-by-step migration plan ordered by dependency."
+    },
+    {
+      "name": "environment_strategy",
+      "description": "Design a multi-environment deployment strategy using GitHub Actions.",
+      "params": [
+        { "name": "environments", "required": true, "description": "JSON list of target environments with their requirements (approval, auto-deploy, cloud provider)" },
+        { "name": "repo_context", "required": true, "description": "JSON with repo info (languages, cloud providers, branch strategy)" }
+      ],
+      "template": "Design a multi-environment deployment strategy for GitHub Actions.\n\n## Environments\n```json\n{environments}\n```\n\n## Repository Context\n```json\n{repo_context}\n```\n\nProduce:\n1. Environment promotion flow (e.g., dev → staging → production)\n2. GitHub Environment configuration (protection rules, reviewers, wait timers, deployment branches)\n3. OIDC configuration per environment (different roles per env)\n4. Reusable deployment workflow design (parameterized by environment)\n5. Rollback strategy\n6. Branch-to-environment mapping"
+    }
+  ]
+}

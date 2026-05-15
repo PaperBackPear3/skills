@@ -1,0 +1,28 @@
+{
+  "tools": [
+    {
+      "name": "gha_scan_workflows",
+      "script": "scan_workflows.py",
+      "description": "Scan existing GitHub Actions workflow files and report their structure (triggers, jobs, actions, environments, secrets).",
+      "params": [
+        { "name": "root_dir", "flag": "--root-dir", "required": true, "description": "Repository root directory to scan" }
+      ]
+    },
+    {
+      "name": "gha_validate_workflow",
+      "script": "validate_workflow.py",
+      "description": "Validate a GitHub Actions workflow YAML file for correctness, security best practices, and common pitfalls.",
+      "params": [
+        { "name": "file", "flag": "--file", "required": true, "description": "Path to the workflow YAML file to validate" }
+      ]
+    },
+    {
+      "name": "gha_scan_ci_config",
+      "script": "scan_ci_config.py",
+      "description": "Detect and parse CI/CD configuration files from other systems (Jenkins, GitLab CI, CircleCI, Azure Pipelines) for migration analysis.",
+      "params": [
+        { "name": "root_dir", "flag": "--root-dir", "required": true, "description": "Repository root directory to scan for CI configs" }
+      ]
+    }
+  ]
+}

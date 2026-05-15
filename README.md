@@ -78,10 +78,14 @@ docs/                   # Documentation
 
 ## Documentation
 
-- [Skills Overview](skills/README.md)
-- [MCP Server](mcp-server/README.md)
-- [Best Practices](docs/BEST_PRACTICES.md)
-- [Agent Rules](rules/devops-agent-rules.md)
+| Doc | What it covers |
+|-----|---------------|
+| [Installation Guide](docs/INSTALL.md) | All install methods (plugin, MCP, manual, symlink) |
+| [Contributing: Add New Stuff](docs/CONTRIBUTING.md) | How to add skills, tools, plugins, rules |
+| [Quick Reference Guide](docs/GUIDE.md) | Architecture, concepts, conventions |
+| [Best Practices](docs/BEST_PRACTICES.md) | MCP vs Agents vs Tools vs Skills deep-dive |
+| [MCP Server](mcp-server/README.md) | Server setup and available tools |
+| [Agent Rules](rules/devops-agent-rules.md) | Behavioral guardrails |
 
 ## License
 

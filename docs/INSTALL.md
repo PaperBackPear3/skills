@@ -15,14 +15,14 @@ One command gives your agent skills + MCP server — no manual config needed.
 ### Claude Code
 
 ```bash
-/plugin marketplace add PaperBackPear3/skills
-/plugin install devops-core@skills
+/plugin marketplace add PaperBackPear3/awesome-agent-toolkits
+/plugin install devops-core@awesome-agent-toolkits
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add PaperBackPear3/skills
+codex plugin marketplace add PaperBackPear3/awesome-agent-toolkits
 # Then run /plugins in Codex to install devops-core
 ```
 
@@ -110,7 +110,7 @@ Ask your agent: *"List available skills"* — it should call `list_skills()` and
 For local development, run the MCP server in Docker:
 
 ```bash
-git clone https://github.com/PaperBackPear3/skills.git ~/skills
+git clone https://github.com/PaperBackPear3/awesome-agent-toolkits.git ~/skills
 cd ~/skills
 docker compose up mcp-server
 ```
@@ -124,7 +124,7 @@ This builds the server and mounts `./skills` as a read-only volume. Skills chang
 Copy individual skills into your agent's skill directory. No MCP server needed, but no runtime discovery.
 
 ```bash
-git clone https://github.com/PaperBackPear3/skills.git ~/skills
+git clone https://github.com/PaperBackPear3/awesome-agent-toolkits.git ~/skills
 ```
 
 | Agent | Skills directory |
@@ -169,7 +169,7 @@ After any method, test by asking your agent:
 
 | Method | Uninstall |
 |--------|-----------|
-| Plugin | `/plugin uninstall devops-core@skills` |
+| Plugin | `/plugin uninstall devops-core@awesome-agent-toolkits` |
 | MCP | Remove the server entry from your MCP config |
 | Manual copy | Delete the skill directory |
 | Symlink | Remove the symlink |

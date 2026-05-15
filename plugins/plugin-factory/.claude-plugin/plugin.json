@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Meta-plugin for creating new plugins and skills in this repository. Scaffolds complete plugin structures, writes SKILL.md files, generates MCP tool scripts, validates, and registers in manifests.",
   "author": { "name": "PaperBackPear3" },
-  "homepage": "https://github.com/PaperBackPear3/skills",
-  "repository": "https://github.com/PaperBackPear3/skills",
+  "homepage": "https://github.com/PaperBackPear3/awesome-agent-toolkits",
+  "repository": "https://github.com/PaperBackPear3/awesome-agent-toolkits",
   "license": "MIT",
   "keywords": ["meta", "scaffolding", "plugin", "skill", "creation"]
 }

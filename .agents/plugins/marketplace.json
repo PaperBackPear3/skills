@@ -1,5 +1,5 @@
 {
-  "name": "skills",
+  "name": "awesome-agent-toolkits",
   "interface": { "displayName": "Agent Skills Toolkit" },
   "plugins": [
     {

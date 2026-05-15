@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/PaperBackPear3/skills"
+Repository = "https://github.com/PaperBackPear3/awesome-agent-toolkits"
 
 [project.scripts]
 skills-mcp-server = "server:main"

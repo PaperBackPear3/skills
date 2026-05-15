@@ -14,7 +14,7 @@ Agent skills are self-contained instruction packages that AI coding agents load 
 ### Method 1: Plugin Install (Claude Code)
 
 ```bash
-claude plugin add github:PaperBackPear3/skills/plugins/devops-core
+claude plugin add github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core
 ```
 
 ### Method 2: Local Copy

@@ -40,8 +40,8 @@ Example:
   "version": "1.0.0",
   "description": "Interactive, safety-first skills for updating Kubernetes clusters (EKS and AKS).",
   "author": { "name": "PaperBackPear3" },
-  "homepage": "https://github.com/PaperBackPear3/skills",
-  "repository": "https://github.com/PaperBackPear3/skills",
+  "homepage": "https://github.com/PaperBackPear3/awesome-agent-toolkits",
+  "repository": "https://github.com/PaperBackPear3/awesome-agent-toolkits",
   "license": "MIT",
   "keywords": ["devops", "kubernetes", "eks", "aks", "terraform"]
 }
@@ -73,8 +73,8 @@ Example:
   "version": "1.0.0",
   "description": "Interactive, safety-first skills for updating Kubernetes clusters (EKS and AKS).",
   "author": { "name": "PaperBackPear3" },
-  "homepage": "https://github.com/PaperBackPear3/skills",
-  "repository": "https://github.com/PaperBackPear3/skills",
+  "homepage": "https://github.com/PaperBackPear3/awesome-agent-toolkits",
+  "repository": "https://github.com/PaperBackPear3/awesome-agent-toolkits",
   "license": "MIT",
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
@@ -137,7 +137,7 @@ Include:
 
 1. Plugin name and one-line description
 2. List of included skills with brief descriptions
-3. Installation command (e.g., `claude plugin add PaperBackPear3/skills/plugins/<name>`)
+3. Installation command (e.g., `claude plugin add PaperBackPear3/awesome-agent-toolkits/plugins/<name>`)
 4. Link to individual skill documentation
 
 ---

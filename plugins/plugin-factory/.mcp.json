@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "skills-mcp": {
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
+    }
+  }
+}

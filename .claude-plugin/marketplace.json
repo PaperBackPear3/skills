@@ -13,6 +13,14 @@
       "version": "1.0.0",
       "category": "devops",
       "keywords": ["devops", "kubernetes", "eks", "aks"]
+    },
+    {
+      "name": "plugin-factory",
+      "description": "Meta-plugin for creating new plugins and skills in this repository",
+      "source": "./plugins/plugin-factory",
+      "version": "1.0.0",
+      "category": "meta",
+      "keywords": ["meta", "scaffolding", "plugin", "skill", "creation"]
     }
   ]
 }

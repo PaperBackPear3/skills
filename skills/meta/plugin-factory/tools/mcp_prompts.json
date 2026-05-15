@@ -1,0 +1,22 @@
+{
+  "prompts": [
+    {
+      "name": "review_skill_description",
+      "description": "Analyze a skill description for trigger quality and suggest improvements.",
+      "params": [
+        {"name": "skill_name", "required": true, "description": "Name of the skill to review"},
+        {"name": "description", "required": true, "description": "Current skill description text"}
+      ],
+      "template": "Review this skill description for trigger quality.\n\nSkill: {skill_name}\nDescription: {description}\n\nEvaluate on:\n1. Specificity — does it name concrete triggers?\n2. Coverage — does it catch adjacent use cases?\n3. Exclusions — are boundaries clear?\n4. Pushiness — will it trigger when it should?\n\nProvide a score (1-5) for each dimension and suggest an improved version."
+    },
+    {
+      "name": "generate_tool_declaration",
+      "description": "Generate an mcp_tools.json entry from a Python script's argparse interface.",
+      "params": [
+        {"name": "script_path", "required": true, "description": "Path to the Python tool script"},
+        {"name": "category", "required": true, "description": "Tool category for namespacing"}
+      ],
+      "template": "Read the Python script at {script_path} and generate an mcp_tools.json tool entry.\n\nCategory for namespacing: {category}\n\nExtract from the script:\n- Tool name (from filename, without .py)\n- Description (from module docstring)\n- Parameters (from argparse arguments)\n\nOutput a JSON object in this format:\n{{\n  \"name\": \"tool_name\",\n  \"script\": \"filename.py\",\n  \"description\": \"What it does.\",\n  \"params\": [\n    {{\"name\": \"param_name\", \"flag\": \"--param-name\", \"required\": true, \"description\": \"...\" }}\n  ]\n}}"
+    }
+  ]
+}

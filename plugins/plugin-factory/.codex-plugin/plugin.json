@@ -1,0 +1,8 @@
+{
+  "name": "plugin-factory",
+  "version": "1.0.0",
+  "description": "Meta-plugin for creating new plugins and skills in this repository. Scaffolds complete plugin structures, writes SKILL.md files, generates MCP tool scripts, validates, and registers in manifests.",
+  "author": "PaperBackPear3",
+  "homepage": "https://github.com/PaperBackPear3/skills",
+  "categories": ["meta", "scaffolding", "creation"]
+}

@@ -20,6 +20,26 @@
       "requires_tools": ["devops__aks_inventory_addons", "devops__aks_scan_terraform", "devops__inventory_helm", "devops__check_prereqs"],
       "requires_mcp": ["terraform", "github"],
       "tags": ["azure", "aks", "kubernetes", "terraform", "helm"]
+    },
+    {
+      "name": "github-actions-writer",
+      "category": "devops",
+      "version": 1,
+      "path": "devops/github-actions-writer",
+      "description": "Interactive, safety-first skill for creating, updating, migrating, and managing GitHub Actions workflows with complex multi-environment release pipelines.",
+      "requires_tools": ["devops__gha_scan_workflows", "devops__gha_validate_workflow", "devops__gha_scan_ci_config"],
+      "requires_mcp": ["github"],
+      "tags": ["github-actions", "ci-cd", "pipelines", "devops", "deployment", "migration"]
+    },
+    {
+      "name": "plugin-factory",
+      "category": "meta",
+      "version": 1,
+      "path": "meta/plugin-factory",
+      "description": "Create new plugins and skills for this repository. Scaffolds plugin structures, writes SKILL.md files, generates MCP tools, validates, and registers in manifests.",
+      "requires_tools": ["meta__scaffold_plugin", "meta__scaffold_skill", "meta__validate_plugin", "meta__validate_skill"],
+      "requires_mcp": [],
+      "tags": ["meta", "scaffolding", "plugin", "skill", "creation"]
     }
   ]
 }

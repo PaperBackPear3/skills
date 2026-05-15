@@ -1,0 +1,44 @@
+{
+  "tools": [
+    {
+      "name": "scaffold_plugin",
+      "script": "scaffold_plugin.py",
+      "description": "Create a complete plugin directory structure with all required configuration files.",
+      "params": [
+        {"name": "name", "flag": "--name", "required": true, "description": "Plugin name (kebab-case)"},
+        {"name": "description", "flag": "--description", "required": true, "description": "Plugin description"},
+        {"name": "author", "flag": "--author", "required": false, "description": "Author name"},
+        {"name": "skills", "flag": "--skills", "required": false, "description": "Comma-separated skill names to symlink"}
+      ]
+    },
+    {
+      "name": "scaffold_skill",
+      "script": "scaffold_skill.py",
+      "description": "Create a skill directory with SKILL.md template and optional subdirectories.",
+      "params": [
+        {"name": "name", "flag": "--name", "required": true, "description": "Skill name (kebab-case)"},
+        {"name": "category", "flag": "--category", "required": true, "description": "Skill category (e.g., devops, security, data, meta)"},
+        {"name": "description", "flag": "--description", "required": true, "description": "Skill description for frontmatter"},
+        {"name": "with_tools", "flag": "--with-tools", "required": false, "description": "Create tools/ directory"},
+        {"name": "with_references", "flag": "--with-references", "required": false, "description": "Create references/ directory"},
+        {"name": "with_agents", "flag": "--with-agents", "required": false, "description": "Create agents/ directory"}
+      ]
+    },
+    {
+      "name": "validate_plugin",
+      "script": "validate_plugin.py",
+      "description": "Validate a plugin directory structure, configuration files, and symlinks.",
+      "params": [
+        {"name": "path", "flag": "--path", "required": true, "description": "Path to plugin directory"}
+      ]
+    },
+    {
+      "name": "validate_skill",
+      "script": "validate_skill.py",
+      "description": "Validate a skill directory: SKILL.md frontmatter, tools declarations, and structure.",
+      "params": [
+        {"name": "path", "flag": "--path", "required": true, "description": "Path to skill directory"}
+      ]
+    }
+  ]
+}

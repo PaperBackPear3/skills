@@ -15,14 +15,14 @@ A meta-plugin for creating new plugins and skills in this repository.
 ### Claude Code
 
 ```bash
-/plugin marketplace add PaperBackPear3/awesome-agent-toolkits
-/plugin install plugin-factory@awesome-agent-toolkits
+/plugin marketplace add PaperBackPear3/awsome-agent-toolkits
+/plugin install plugin-factory@awsome-agent-toolkits
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add PaperBackPear3/awesome-agent-toolkits
+codex plugin marketplace add PaperBackPear3/awsome-agent-toolkits
 # Then install plugin-factory from /plugins
 ```
 

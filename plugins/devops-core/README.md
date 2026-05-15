@@ -7,7 +7,7 @@ Interactive, safety-first skills for updating Kubernetes clusters (EKS and AKS).
 ### Claude Code
 
 ```bash
-claude plugin add github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core
+claude plugin add github:PaperBackPear3/awsome-agent-toolkits/plugins/devops-core
 ```
 
 ### Codex
@@ -16,7 +16,7 @@ Add to your `.codex/plugins.json`:
 
 ```json
 {
-  "plugins": ["github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core"]
+  "plugins": ["github:PaperBackPear3/awsome-agent-toolkits/plugins/devops-core"]
 }
 ```
 

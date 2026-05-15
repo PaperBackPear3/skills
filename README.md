@@ -11,13 +11,13 @@ Skills can encode expertise from **any domain**: DevOps, security, data engineer
 Install a plugin (e.g. the DevOps plugin — one of the available plugins):
 
 ```bash
-claude plugin add github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core
+claude plugin add github:PaperBackPear3/awsome-agent-toolkits/plugins/devops-core
 ```
 
 ### Codex
 
 ```json
-{ "plugins": ["github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core"] }
+{ "plugins": ["github:PaperBackPear3/awsome-agent-toolkits/plugins/devops-core"] }
 ```
 
 ### Manual (any agent)

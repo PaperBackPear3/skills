@@ -33,7 +33,7 @@ Add to `.kiro/settings/mcp.json`:
 ```json
 {
   "mcpServers": {
-    "devops-skills": {
+    "skills-mcp": {
       "command": "python3",
       "args": ["/path/to/skills/mcp-server/server.py"]
     }
@@ -43,7 +43,7 @@ Add to `.kiro/settings/mcp.json`:
 
 Then copy skills:
 ```bash
-cp -r skills/devops/* ~/.kiro/skills/
+cp -r skills/<category>/* ~/.kiro/skills/
 ```
 
 ---
@@ -73,7 +73,7 @@ Add to your agent's MCP config:
 ```json
 {
   "servers": {
-    "devops-skills": {
+    "skills-mcp": {
       "command": "python3",
       "args": ["/Users/you/skills/mcp-server/server.py"]
     }
@@ -85,7 +85,7 @@ Add to your agent's MCP config:
 ```json
 {
   "mcpServers": {
-    "devops-skills": {
+    "skills-mcp": {
       "command": "python3",
       "args": ["/Users/you/skills/mcp-server/server.py"]
     }
@@ -97,7 +97,7 @@ Add to your agent's MCP config:
 ```json
 {
   "mcpServers": {
-    "devops-skills": {
+    "skills-mcp": {
       "command": "python3",
       "args": ["/Users/you/skills/mcp-server/server.py"]
     }
@@ -107,7 +107,7 @@ Add to your agent's MCP config:
 
 ### 4. Verify
 
-Ask your agent: *"List available skills"* — it should call `list_skills()` and show the EKS/AKS updaters.
+Ask your agent: *"List available skills"* — it should call `list_skills()` and show your installed skills.
 
 ---
 
@@ -151,9 +151,9 @@ ln -s ~/skills/skills/devops/azure-aks-updater ~/.claude/skills/azure-aks-update
 
 After any method, test by asking your agent:
 
-- *"Update my EKS cluster"* → should trigger `aws-eks-updater` skill
-- *"Check my AKS add-on versions"* → should trigger `azure-aks-updater` skill
-- *"List available skills"* → (MCP only) should call `list_skills()`
+- *"List available skills"* → (MCP) should call `list_skills()` and show installed skills
+- *"Help me with [task matching a skill description]"* → should trigger the relevant skill
+- *"What skills do you have?"* → should enumerate available skills
 
 ---
 

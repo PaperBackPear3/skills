@@ -422,28 +422,29 @@ If an MCP tool exists for the data retrieval, use it. Skills should focus on orc
 Skills are installed by symlinking a skill directory into the agent's skills folder:
 
 ```bash
-ln -s /path/to/skills/devops/aws-eks-updater ~/.agents/skills/aws-eks-updater
+ln -s /path/to/skills/<category>/<skill-name> ~/.agents/skills/<skill-name>
 ```
 
 The agent discovers skills via YAML frontmatter in `SKILL.md`:
 
 ```yaml
 ---
-name: aws-eks-updater
+name: my-skill-name
 description: >
-  Interactive, safety-first skill for updating an AWS EKS cluster...
+  What it does. Use when [trigger conditions].
+  Do NOT use for [exclusions].
 ---
 ```
 
-Each skill follows a phase-based structure:
+Each skill follows a consistent structure:
 
 ```
-devops/aws-eks-updater/
-├── SKILL.md              # Phase-based playbook (PHASE 0–6)
+<category>/<skill-name>/
+├── SKILL.md              # Phase-based playbook
 ├── agents/               # Sub-agent prompts for fan-out
-├── assets/               # HTML report templates
-├── references/           # Static compatibility data
-└── tools/                # Python helper scripts (stdlib only)
+├── assets/               # Report templates
+├── references/           # Static reference data
+└── tools/                # Helper scripts (stdlib only)
 ```
 
 ### How MCP Complements Skills
@@ -452,7 +453,7 @@ Adding MCP exposes the data-gathering tools (currently Python scripts in `tools/
 
 | Current (Skill-only) | With MCP |
 |---|---|
-| `tools/inventory_addons.py` runs as subprocess | `eks-list_addons` callable by any MCP client |
+| `tools/my_script.py` runs as subprocess | `category__my_tool` callable by any MCP client |
 | Only usable within this skill's context | Reusable by other skills, IDEs, CI pipelines |
 | Output format is ad-hoc text/JSON | Standardized JSON Schema input/output |
 
@@ -472,8 +473,8 @@ Both approaches serve different purposes and coexist naturally:
 │              MCP TOOL LAYER                  │
 │  (Data retrieval, validation, queries)       │
 │                                              │
-│  eks-list_addons, terraform-scan_modules,   │
-│  github-get_file_contents                    │
+│  devops__list_addons, security__audit_policy,              │
+│  data__validate_schema, github-get_file_contents           │
 └─────────────────────────────────────────────┘
 ```
 
@@ -485,10 +486,10 @@ Both approaches serve different purposes and coexist naturally:
 - Decision-making about upgrade order
 
 **The MCP tool layer** handles:
-- Fetching current cluster state
-- Querying available versions
-- Reading changelogs
-- Validating compatibility
+- Fetching current system state
+- Querying available versions or configurations
+- Reading changelogs or documentation
+- Validating compatibility or schemas
 - Executing atomic operations
 
 This separation means:
@@ -505,9 +506,9 @@ This separation means:
 |---|---|---|---|
 | **MCP Tool** | Single atomic operation | Stateless per call | `list_addons(cluster)` |
 | **MCP Resource** | Static reference data | Read-only | Compatibility matrix |
-| **MCP Prompt** | Task template | Triggers workflow | "Upgrade cluster X" |
+| **MCP Prompt** | Task template | Triggers workflow | "Audit IAM policies" |
 | **Sub-Agent** | Parallel research unit | Scoped to one task | Changelog researcher |
-| **Skill** | End-to-end workflow | Session-long | EKS cluster upgrade |
+| **Skill** | End-to-end workflow | Session-long | Multi-step guided task |
 
 **The golden rule:** Push data operations down into MCP tools. Keep orchestration, judgment, and safety in skills. Let agents be the glue that connects them.
 

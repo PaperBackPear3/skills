@@ -1,13 +1,11 @@
 # Skills MCP Server
 
-An MCP (Model Context Protocol) server that exposes the DevOps skill tools as MCP tools, resources, and prompts.
+An MCP (Model Context Protocol) server that exposes skill tools as MCP tools, resources, and prompts. It auto-discovers skills from any domain (devops, security, data, etc.) and makes their tools available to any MCP-compatible agent.
 
 ## Prerequisites
 
 - Python 3.10+
-- Cloud CLIs: `aws` (for EKS tools), `az` (for AKS tools)
-- `kubectl` and `helm` (for cluster inventory tools)
-- `terraform` (for scan tools)
+- Domain-specific CLIs as needed by individual skills (e.g., `aws`, `az`, `kubectl`, `helm`, `terraform`)
 
 ## Installation
 
@@ -33,7 +31,7 @@ Add to your `.vscode/mcp.json` or user MCP settings:
 ```json
 {
   "servers": {
-    "skills": {
+    "skills-mcp": {
       "command": "python",
       "args": ["<path-to-repo>/mcp-server/server.py"],
       "transportType": "stdio"
@@ -49,7 +47,7 @@ Add to `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "skills": {
+    "skills-mcp": {
       "command": "python",
       "args": ["<path-to-repo>/mcp-server/server.py"]
     }
@@ -57,7 +55,9 @@ Add to `claude_desktop_config.json`:
 }
 ```
 
-## Available Tools
+## Available Tools (Examples)
+
+The server auto-discovers tools from all installed skills. Below are examples from the included devops skills:
 
 | Tool | Description | Parameters |
 |------|-------------|------------|

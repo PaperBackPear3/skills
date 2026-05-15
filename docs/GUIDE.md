@@ -19,7 +19,7 @@ A quick, practical guide to understanding and extending this toolkit.
 │                    MCP SERVER                               │
 │                                                            │
 │  Core:     list_skills() · retrieve_skill(name)            │
-│  Tools:    devops__eks_inventory_addons · ...               │
+│  Tools:    <category>__<tool_name> · ...                    │
 │  Resources: compatibility matrices · templates             │
 │  Prompts:  analyze_drift · changelog_research              │
 └────────────────────────────────────────────────────────────┘
@@ -27,9 +27,11 @@ A quick, practical guide to understanding and extending this toolkit.
      discovers from
              │
 ┌────────────▼───────────────────────────────────────────────┐
-│                    SKILLS                                   │
+│                    YOUR SKILLS                              │
 │                                                            │
 │  skills/devops/aws-eks-updater/                            │
+│  skills/security/iam-auditor/                              │
+│  skills/data/schema-validator/                             │
 │    SKILL.md          ← Agent reads this, follows phases    │
 │    tools/            ← Scripts exposed via MCP             │
 │    references/       ← Exposed as MCP resources            │
@@ -58,7 +60,7 @@ A quick, practical guide to understanding and extending this toolkit.
 1. Agent receives a user request
 2. Agent calls `list_skills()` → gets names + descriptions
 3. Agent picks the best match by description
-4. Agent calls `retrieve_skill("aws-eks-updater")` → gets full SKILL.md
+4. Agent calls `retrieve_skill("my-skill-name")` → gets full SKILL.md
 5. Agent follows the skill's phases, calling MCP tools as needed
 
 **No local installation required** — skills are discoverable at runtime through the MCP server.
@@ -146,8 +148,8 @@ Tools are namespaced by category with double underscores:
 Examples:
 - `devops__eks_inventory_addons`
 - `devops__aks_scan_terraform`
-- `security__audit_iam_policy` (future)
-- `data__validate_pipeline` (future)
+- `security__audit_iam_policy`
+- `data__validate_schema`
 
 ---
 

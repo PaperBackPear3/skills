@@ -510,3 +510,80 @@ This separation means:
 | **Skill** | End-to-end workflow | Session-long | EKS cluster upgrade |
 
 **The golden rule:** Push data operations down into MCP tools. Keep orchestration, judgment, and safety in skills. Let agents be the glue that connects them.
+
+---
+
+## 6. The AWS Agent Toolkit Pattern (Reference Architecture)
+
+AWS's Agent Toolkit for AWS establishes the gold-standard pattern for packaging agent capabilities. This repo follows the same structure.
+
+### Key Principles
+
+1. **Skills are discoverable at runtime** — via `list_skills` and `retrieve_skill` MCP tools. Agents don't need local installation to find and use skills.
+2. **Plugins bundle everything** — a plugin = MCP server config + skills + metadata. One install gives the agent everything it needs.
+3. **Rules files set guardrails** — project-level markdown that tells agents _how_ to work (e.g., "use MCP first", "never apply without confirmation").
+4. **Marketplace manifests enable distribution** — `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` make skills installable via `/plugin install`.
+5. **Skills are the unit of knowledge** — `SKILL.md` with YAML frontmatter (`name`, `description`, `version`) is the universal format.
+
+### Repository Layout Pattern
+
+```
+.claude-plugin/marketplace.json     # Agent marketplace discovery
+.agents/plugins/marketplace.json    # Generic agent marketplace
+plugins/<name>/                     # Installable bundles
+  .claude-plugin/plugin.json        #   Claude Code metadata
+  .codex-plugin/plugin.json         #   Codex metadata (includes skills/mcpServers pointers)
+  .mcp.json                         #   MCP server config
+  skills/                           #   Bundled skills (symlinks or copies)
+skills/<category>/<skill>/          # Canonical skill content
+  SKILL.md                          #   Entry point (YAML frontmatter + instructions)
+  references/                       #   Deep-dive reference materials
+  tools/                            #   Helper scripts
+rules/                              # Agent behavior rules
+mcp-server/                         # MCP server exposing tools + skill discovery
+```
+
+### Skill Discovery Flow
+
+```
+Agent receives user request
+  → Agent calls list_skills() via MCP
+  → Finds matching skill by description
+  → Agent calls retrieve_skill(name) via MCP
+  → Receives full SKILL.md content
+  → Follows the skill's phased instructions
+  → Calls MCP tools (inventory, scan, etc.) as directed by skill
+```
+
+### SKILL.md Frontmatter Best Practices
+
+```yaml
+---
+name: kebab-case-name          # Machine-readable identifier
+description: >                 # 2-3 sentences. Start with what it does.
+  Verb phrase describing the skill. Use when [trigger conditions].
+  Do NOT use for [exclusions].
+version: 1                     # Integer, bump on breaking changes
+---
+```
+
+The `description` field is critical — agents use it for routing. Write it as trigger documentation:
+- Start with an action verb ("Creates...", "Diagnoses...", "Updates...")
+- Include "Use when..." with concrete trigger phrases
+- Include "Do NOT use for..." to prevent false matches
+
+### Rules File Best Practices
+
+Rules are simple markdown bullets — not code, not YAML. Keep them:
+- Actionable ("prefer X over Y", "always do Z before W")
+- Scoped (one rules file per domain/concern)
+- Short (6-10 bullets max — agents have finite context)
+
+```markdown
+# Domain Guidance
+
+- Prefer [tool/approach A] for [situation]. Fall back to [B] otherwise.
+- Before starting [task type], check for available skills via list_skills.
+- Never [dangerous action] without explicit user confirmation.
+- When uncertain about [X], verify via [Y] rather than guessing.
+```

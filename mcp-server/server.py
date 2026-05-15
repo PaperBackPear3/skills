@@ -92,6 +92,7 @@ async def retrieve_skill(name: str) -> str:
 
 def _discover_and_register_tools():
     """Scan skills for mcp_tools.json and register tools dynamically."""
+    seen = set()
     for tools_manifest in SKILLS_DIR.rglob("tools/mcp_tools.json"):
         skill_dir = tools_manifest.parent.parent
         rel = skill_dir.relative_to(SKILLS_DIR)
@@ -104,11 +105,13 @@ def _discover_and_register_tools():
 
         for tool_def in manifest.get("tools", []):
             tool_name = f"{category}__{tool_def['name']}"
+            if tool_name in seen:
+                continue
+            seen.add(tool_name)
             script_path = tools_manifest.parent / tool_def["script"]
             description = tool_def.get("description", f"Run {tool_def['script']}")
             params = tool_def.get("params", [])
 
-            # Create a closure-based async tool function
             _register_dynamic_tool(tool_name, description, script_path, params)
 
 
@@ -180,10 +183,11 @@ def _discover_and_register_resources():
 def _register_resource(uri: str, file_path: Path):
     """Register a single file as an MCP resource."""
     desc = f"Resource: {file_path.name}"
+    _path = file_path
 
     @server.resource(uri)
-    def resource_fn(path=file_path, description=desc) -> str:
-        return path.read_text()
+    def resource_fn() -> str:
+        return _path.read_text()
 
     resource_fn.__name__ = f"resource_{uri.replace('://', '_').replace('/', '_')}"
     resource_fn.__doc__ = desc

@@ -108,8 +108,29 @@ skills://<category>/<skill-name>/assets/<filename>
 
 ## Available Prompts
 
+Prompts are auto-discovered from `tools/mcp_prompts.json` in each skill directory, namespaced as `<category>__<prompt_name>`. Example prompts from the devops skills:
+
 | Prompt | Description | Arguments |
 |--------|-------------|-----------|
-| `analyze_drift` | Compare inventory vs Terraform versions | `inventory_json`, `terraform_json` |
-| `changelog_research` | Research changelog between versions | `package`, `from_version`, `to_version` |
-| `upgrade_plan` | Generate upgrade plan from drift analysis | `drift_analysis` |
+| `devops__analyze_drift` | Compare inventory vs Terraform versions | `inventory_json`, `terraform_json` |
+| `devops__changelog_research` | Research changelog between versions | `package`, `from_version`, `to_version` |
+| `devops__upgrade_plan` | Generate upgrade plan from drift analysis | `drift_analysis` |
+
+### Adding Prompts
+
+Create a `tools/mcp_prompts.json` in your skill directory:
+
+```json
+{
+  "prompts": [
+    {
+      "name": "my_prompt",
+      "description": "What this prompt produces.",
+      "params": [
+        { "name": "input_data", "required": true, "description": "Data to analyze" }
+      ],
+      "template": "Analyze the following:\n\n{input_data}\n\nProduce a summary."
+    }
+  ]
+}
+```

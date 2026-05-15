@@ -8,6 +8,7 @@ Skills are multi-step playbooks; MCP tools are their stateless building blocks.
 - No build system, no tests, no external deps. Deliverables are Markdown + Python scripts.
 - `skills/<category>/<skill>/SKILL.md` — the agent entry point (YAML frontmatter + phases)
 - `tools/mcp_tools.json` in a skill — auto-discovered by `mcp-server/server.py`
+- `tools/mcp_prompts.json` in a skill — auto-discovered prompts
 - `skills/manifest.json` — must be updated when adding/removing skills
 - `references/` and `assets/` — auto-exposed as MCP resources
 

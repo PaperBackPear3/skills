@@ -148,7 +148,28 @@ Rules for tool scripts:
 }
 ```
 
-### Step 3: Done
+### Step 3: (Optional) Create `tools/mcp_prompts.json`
+
+If your skill benefits from reusable prompt templates (e.g., analysis, research, planning), declare them:
+
+```json
+{
+  "prompts": [
+    {
+      "name": "my_prompt",
+      "description": "Clear one-line description of what this prompt produces.",
+      "params": [
+        { "name": "input_data", "required": true, "description": "Data to include in the prompt" }
+      ],
+      "template": "Analyze the following data:\n\n{input_data}\n\nProduce a summary."
+    }
+  ]
+}
+```
+
+Prompts are namespaced as `<category>__my_prompt` and auto-discovered on server restart.
+
+### Step 4: Done
 
 Restart the MCP server — your tool appears as `<category>__my_tool`.
 
@@ -291,6 +312,7 @@ The parent skill references these via: *"Delegate to the research agent at `agen
 - [ ] Description includes "Do NOT use for..." exclusions
 - [ ] `skills/manifest.json` updated
 - [ ] (If tools) `tools/mcp_tools.json` created
+- [ ] (If prompts) `tools/mcp_prompts.json` created
 - [ ] (If tools) Scripts output JSON, use argparse, stdlib only
 - [ ] (If references) Files in `references/` for deep-dive content
 - [ ] Tested: `python3 mcp-server/server.py` starts without errors

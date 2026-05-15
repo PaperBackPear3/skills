@@ -207,6 +207,7 @@ Agents load these as behavioral guardrails. Keep them short (6-10 bullets).
 | You want to... | Put it in... |
 |----------------|-------------|
 | Query/fetch data (stateless) | MCP Tool (`mcp_tools.json`) |
+| Reusable prompt templates | MCP Prompt (`mcp_prompts.json`) |
 | Provide reference material | MCP Resource (`references/`) |
 | Guide a multi-step workflow | Skill (`SKILL.md`) |
 | Parallelize research work | Sub-agent (`agents/*.md`) |

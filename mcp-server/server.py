@@ -2,6 +2,7 @@
 MCP server with auto-discovery of tools from skill directories.
 
 Tools are discovered from skills/<category>/<skill>/tools/mcp_tools.json files.
+Prompts are discovered from skills/<category>/<skill>/tools/mcp_prompts.json files.
 Resources are auto-discovered from skills/<category>/<skill>/references/ and assets/.
 Skill discovery (list_skills, retrieve_skill) is always available.
 """
@@ -188,46 +189,52 @@ def _register_resource(uri: str, file_path: Path):
     resource_fn.__doc__ = desc
 
 
-# --- Prompts (static, curated) ---
+# --- Auto-discovered Prompts ---
 
 
-@server.prompt()
-def analyze_drift(inventory_json: str, terraform_json: str) -> str:
-    """Analyze drift between installed versions (inventory) and declared versions (terraform)."""
-    return (
-        "Compare the following installed add-on inventory with the Terraform-declared versions. "
-        "Identify any version drift and classify each as: in-sync, minor-drift, or major-drift.\n\n"
-        f"## Installed Inventory\n```json\n{inventory_json}\n```\n\n"
-        f"## Terraform Declarations\n```json\n{terraform_json}\n```\n\n"
-        "Produce a table with columns: Component, Installed Version, Declared Version, Drift Status."
-    )
+def _discover_and_register_prompts():
+    """Scan skills for mcp_prompts.json and register prompts dynamically."""
+    seen = set()
+    for prompts_manifest in SKILLS_DIR.rglob("tools/mcp_prompts.json"):
+        skill_dir = prompts_manifest.parent.parent
+        rel = skill_dir.relative_to(SKILLS_DIR)
+        category = rel.parts[0] if len(rel.parts) > 1 else "general"
+
+        try:
+            manifest = json.loads(prompts_manifest.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+
+        for prompt_def in manifest.get("prompts", []):
+            prompt_name = f"{category}__{prompt_def['name']}"
+            if prompt_name in seen:
+                continue
+            seen.add(prompt_name)
+            _register_dynamic_prompt(
+                prompt_name,
+                prompt_def.get("description", prompt_def["name"]),
+                prompt_def.get("template", ""),
+                prompt_def.get("params", []),
+            )
 
 
-@server.prompt()
-def changelog_research(package: str, from_version: str, to_version: str) -> str:
-    """Generate a research prompt for changelog analysis between two versions."""
-    return (
-        f"Research the changelog for **{package}** from version **{from_version}** to **{to_version}**.\n\n"
-        "For each version in the range:\n"
-        "1. Find the GitHub release notes or CHANGELOG.md entries\n"
-        "2. Flag any breaking changes, deprecations, or required migration steps\n"
-        "3. Note new features that may be relevant\n\n"
-        "Summarize findings with a risk assessment: LOW / MEDIUM / HIGH."
-    )
+def _register_dynamic_prompt(name: str, description: str, template: str, params: list[dict]):
+    """Register a single dynamic prompt with the MCP server."""
 
+    def prompt_fn(**kwargs) -> str:
+        return template.format(**kwargs)
 
-@server.prompt()
-def upgrade_plan(drift_analysis: str) -> str:
-    """Generate an upgrade plan from a drift analysis."""
-    return (
-        "Based on the following drift analysis, produce a step-by-step upgrade plan.\n\n"
-        f"## Drift Analysis\n{drift_analysis}\n\n"
-        "Requirements:\n"
-        "- Order updates by dependency (control plane first, then add-ons, then Helm releases)\n"
-        "- For each component, specify: current version, target version, update method (Terraform / CLI / Helm)\n"
-        "- Flag any components that require a specific update sequence\n"
-        "- Include rollback steps for each component"
-    )
+    prompt_fn.__name__ = name
+    prompt_fn.__doc__ = description
+
+    annotations = {p["name"]: str for p in params}
+    annotations["return"] = str
+    prompt_fn.__annotations__ = annotations
+
+    optional = [p for p in params if not p.get("required", False)]
+    prompt_fn.__defaults__ = tuple("" for _ in optional) if optional else None
+
+    server.prompt()(prompt_fn)
 
 
 # --- Bootstrap and Entry Point ---
@@ -235,6 +242,7 @@ def upgrade_plan(drift_analysis: str) -> str:
 
 _discover_and_register_tools()
 _discover_and_register_resources()
+_discover_and_register_prompts()
 
 if __name__ == "__main__":
     server.run()

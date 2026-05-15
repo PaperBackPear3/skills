@@ -7,12 +7,11 @@ description: >
   scans them for breaking changes, then walks the user through updates one package at a time.
   Auto-plans patch/minor bumps; proposes major bumps only when no breaking-change markers are
   found and always with a written report. Never commits, pushes, or applies changes.
-  Use this skill whenever the user mentions updating or upgrading an EKS cluster, bumping
-  Kubernetes / k8s versions, upgrading EKS add-ons (vpc-cni, coredns, kube-proxy, ebs-csi,
-  efs-csi, pod-identity-agent, adot, cloudwatch-observability), upgrading Helm releases on
-  EKS, checking EKS / add-on compatibility, or planning a control-plane minor bump — even
-  when they don't say "EKS" explicitly but the context (kubeconfig pointing at an EKS
-  cluster, eksctl, aws-auth configmap, terraform `aws_eks_*` resources) makes it clear.
+  Use when the user mentions updating or upgrading an EKS cluster, bumping Kubernetes/k8s
+  versions, upgrading EKS add-ons (vpc-cni, coredns, kube-proxy, ebs-csi, efs-csi,
+  pod-identity-agent, adot, cloudwatch-observability), upgrading Helm releases on EKS,
+  checking EKS/add-on compatibility, or planning a control-plane minor bump — even without
+  the word "EKS" when context (eksctl, aws-auth configmap, terraform `aws_eks_*`) is clear.
 ---
 
 # EKS Cluster Updater

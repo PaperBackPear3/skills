@@ -34,7 +34,7 @@ devops/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-org/skills.git ~/skills
+git clone https://github.com/PaperBackPear3/skills.git ~/skills
 ```
 
 ### 2. Symlink the skill(s) you want

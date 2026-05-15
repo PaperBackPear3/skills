@@ -20,7 +20,7 @@ from mcp.server.fastmcp import FastMCP
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SKILLS_DIR = None  # Set in main()
 
-server = FastMCP("skills-mcp-server")
+server = FastMCP("awesome-agent-toolkits-mcp-server")
 
 
 # --- Utility ---

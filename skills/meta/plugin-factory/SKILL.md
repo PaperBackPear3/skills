@@ -139,7 +139,7 @@ Run `meta__validate_plugin` on the plugin directory. It checks:
 - All required files exist (.claude-plugin/plugin.json, .mcp.json, etc.)
 - JSON files are valid
 - Skills symlinks resolve
-- .mcp.json uses the `"skills-mcp"` server key
+- .mcp.json uses the `"awesome-agent-toolkits-mcp"` server key
 
 Run `meta__validate_skill` on each skill directory. It checks:
 - SKILL.md exists and has valid frontmatter

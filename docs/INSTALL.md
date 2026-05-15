@@ -33,9 +33,9 @@ Add to `.kiro/settings/mcp.json`:
 ```json
 {
   "mcpServers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest"]
     }
   }
 }
@@ -60,9 +60,9 @@ Add to your agent's MCP config:
 ```json
 {
   "servers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest"]
     }
   }
 }
@@ -72,9 +72,9 @@ Add to your agent's MCP config:
 ```json
 {
   "mcpServers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest"]
     }
   }
 }
@@ -84,9 +84,9 @@ Add to your agent's MCP config:
 ```json
 {
   "mcpServers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest"]
     }
   }
 }
@@ -95,7 +95,7 @@ Add to your agent's MCP config:
 Point at a custom skills directory with `--skills-dir`:
 ```json
 {
-  "args": ["skills-mcp-server@latest", "--skills-dir", "/path/to/skills"]
+  "args": ["awesome-agent-toolkits-mcp-server@latest", "--skills-dir", "/path/to/skills"]
 }
 ```
 

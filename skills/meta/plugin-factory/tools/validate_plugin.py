@@ -52,8 +52,8 @@ def main():
             data = json.loads(mcp_json.read_text())
             if "mcpServers" not in data:
                 errors.append(".mcp.json missing 'mcpServers' key")
-            elif "skills-mcp" not in data.get("mcpServers", {}):
-                warnings.append(".mcp.json server key is not 'skills-mcp'")
+            elif "awesome-agent-toolkits-mcp" not in data.get("mcpServers", {}):
+                warnings.append(".mcp.json server key is not 'awesome-agent-toolkits-mcp'")
         except json.JSONDecodeError as e:
             errors.append(f".mcp.json invalid JSON: {e}")
 

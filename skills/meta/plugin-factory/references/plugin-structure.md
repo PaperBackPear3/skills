@@ -93,20 +93,20 @@ Example:
 
 ## `.mcp.json`
 
-All plugins use the same MCP server entry under the key `"skills-mcp"`:
+All plugins use the same MCP server entry under the key `"awesome-agent-toolkits-mcp"`:
 
 ```json
 {
   "mcpServers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest"]
     }
   }
 }
 ```
 
-**Important:** Claude Code deduplicates MCP servers by endpoint. If a user installs multiple plugins that all declare the same `skills-mcp` server, only one instance is started. This is by design — all skills share a single MCP server process that auto-discovers them.
+**Important:** Claude Code deduplicates MCP servers by endpoint. If a user installs multiple plugins that all declare the same `awesome-agent-toolkits-mcp` server, only one instance is started. This is by design — all skills share a single MCP server process that auto-discovers them.
 
 ---
 

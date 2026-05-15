@@ -49,9 +49,9 @@ def main():
 
     mcp_json = {
         "mcpServers": {
-            "skills-mcp": {
+            "awesome-agent-toolkits-mcp": {
                 "command": "uvx",
-                "args": ["skills-mcp-server@latest"]
+                "args": ["awesome-agent-toolkits-mcp-server@latest"]
             }
         }
     }

@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir .
 # Skills directory is mounted at runtime
 ENV SKILLS_DIR=/skills
 
-ENTRYPOINT ["skills-mcp-server"]
+ENTRYPOINT ["awesome-agent-toolkits-mcp-server"]

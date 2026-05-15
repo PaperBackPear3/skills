@@ -17,9 +17,9 @@ No install needed — `uvx` runs the server directly from PyPI:
 ```json
 {
   "mcpServers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest"]
     }
   }
 }
@@ -30,9 +30,9 @@ Pass `--skills-dir` to point at your skills directory:
 ```json
 {
   "mcpServers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest", "--skills-dir", "/path/to/skills"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest", "--skills-dir", "/path/to/skills"]
     }
   }
 }
@@ -75,9 +75,9 @@ Add to your `.vscode/mcp.json` or user MCP settings:
 ```json
 {
   "servers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"],
+      "args": ["awesome-agent-toolkits-mcp-server@latest"],
       "transportType": "stdio"
     }
   }
@@ -91,9 +91,9 @@ Add to `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "skills-mcp": {
+    "awesome-agent-toolkits-mcp": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest"]
     }
   }
 }

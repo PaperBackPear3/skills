@@ -232,7 +232,7 @@ plugins/<plugin-name>/
   "mcpServers": {
     "my-server": {
       "command": "uvx",
-      "args": ["skills-mcp-server@latest", "--skills-dir", "./skills"]
+      "args": ["awesome-agent-toolkits-mcp-server@latest", "--skills-dir", "./skills"]
     }
   }
 }
@@ -315,7 +315,7 @@ The parent skill references these via: *"Delegate to the research agent at `agen
 - [ ] (If prompts) `tools/mcp_prompts.json` created
 - [ ] (If tools) Scripts output JSON, use argparse, stdlib only
 - [ ] (If references) Files in `references/` for deep-dive content
-- [ ] Tested: `uvx skills-mcp-server@latest` starts without errors (or `python3 mcp-server/server.py` from source)
+- [ ] Tested: `uvx awesome-agent-toolkits-mcp-server@latest` starts without errors (or `python3 mcp-server/server.py` from source)
 
 ## Checklist: New Plugin
 

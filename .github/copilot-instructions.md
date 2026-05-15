@@ -22,7 +22,7 @@ plugins/<plugin-name>/              ← Installable bundles for agent marketplac
   .mcp.json
   skills/                           ← Symlinks to canonical skills
 rules/                              ← Agent behavior rules (per-domain)
-mcp-server/server.py                ← Auto-discovering MCP server (published as `skills-mcp-server` via uvx)
+mcp-server/server.py                ← Auto-discovering MCP server (published as `awesome-agent-toolkits-mcp-server` via uvx)
 skills/manifest.json                ← Machine-readable skill catalog
 docs/                               ← Framework documentation
 ```

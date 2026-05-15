@@ -1,7 +1,7 @@
 {
   "name": "skills",
   "metadata": {
-    "description": "Agent skills for DevOps workflows",
+    "description": "A framework for discoverable agent skills — package business logic as composable, MCP-served capabilities",
     "version": "1.0.0"
   },
   "owner": { "name": "PaperBackPear3" },

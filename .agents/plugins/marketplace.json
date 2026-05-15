@@ -1,6 +1,6 @@
 {
   "name": "skills",
-  "interface": { "displayName": "DevOps Skills" },
+  "interface": { "displayName": "Agent Skills Toolkit" },
   "plugins": [
     {
       "name": "devops-core",

@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "devops-skills": {
+    "skills-mcp": {
       "command": "uvx",
       "args": ["skills-mcp-server@latest"]
     }

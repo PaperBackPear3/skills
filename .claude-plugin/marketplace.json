@@ -1,0 +1,18 @@
+{
+  "name": "skills",
+  "metadata": {
+    "description": "Agent skills for DevOps workflows",
+    "version": "1.0.0"
+  },
+  "owner": { "name": "PaperBackPear3" },
+  "plugins": [
+    {
+      "name": "devops-core",
+      "description": "Kubernetes cluster update skills (EKS + AKS) with MCP tools",
+      "source": "./plugins/devops-core",
+      "version": "1.0.0",
+      "category": "devops",
+      "keywords": ["devops", "kubernetes", "eks", "aks"]
+    }
+  ]
+}

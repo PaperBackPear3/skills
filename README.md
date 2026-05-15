@@ -1,6 +1,6 @@
 # Skills
 
-A collection of advanced agent skills for GitHub Copilot.
+A collection of advanced agent skills.
 
 ## Available Skills
 
@@ -29,6 +29,36 @@ devops/
     tools/            # Python helper scripts
 ```
 
-## Usage
+## How to Use
 
-Skills are loaded by GitHub Copilot agent when the user's request matches the skill description. Each `SKILL.md` contains the full instructions the agent follows.
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-org/skills.git ~/skills
+```
+
+### 2. Symlink the skill(s) you want
+
+Pick any skill from this repo and symlink it into your agent skills folder.
+
+#### GitHub Copilot (VS Code)
+
+Skills live in `~/.agents/skills/`. Create the directory if it doesn't exist:
+
+```bash
+mkdir -p ~/.agents/skills
+ln -s ~/skills/devops/aws-eks-updater ~/.agents/skills/aws-eks-updater
+ln -s ~/skills/devops/azure-aks-updater ~/.agents/skills/azure-aks-updater
+```
+
+#### Claude Code
+
+Skills live in `~/.claude/skills/`. Create the directory if it doesn't exist:
+
+```bash
+mkdir -p ~/.claude/skills
+ln -s ~/skills/devops/aws-eks-updater ~/.claude/skills/aws-eks-updater
+ln -s ~/skills/devops/azure-aks-updater ~/.claude/skills/azure-aks-updater
+```
+
+After symlinking, the agent will automatically pick up the skill when your request matches its description. Each `SKILL.md` contains the full instructions the agent follows.

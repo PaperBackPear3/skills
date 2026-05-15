@@ -34,8 +34,8 @@ Add to `.kiro/settings/mcp.json`:
 {
   "mcpServers": {
     "skills-mcp": {
-      "command": "python3",
-      "args": ["/path/to/skills/mcp-server/server.py"]
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
     }
   }
 }

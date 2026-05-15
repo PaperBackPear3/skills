@@ -82,7 +82,7 @@ async def retrieve_skill(name: str) -> str:
             try:
                 end = content.index("---", 3)
                 frontmatter = content[3:end]
-                if f"name: {name}" in frontmatter:
+                if re.search(rf'^name:\s*{re.escape(name)}\s*$', frontmatter, re.MULTILINE):
                     return content
             except ValueError:
                 continue
@@ -258,6 +258,9 @@ def main():
         SKILLS_DIR = Path(os.environ["SKILLS_DIR"])
     else:
         SKILLS_DIR = REPO_ROOT / "skills"
+
+    if not SKILLS_DIR.is_dir():
+        parser.error(f"Skills directory does not exist: {SKILLS_DIR}")
 
     _discover_and_register_tools()
     _discover_and_register_resources()

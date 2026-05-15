@@ -28,7 +28,7 @@ Copy a skill directory into your agent's skill folder:
 
 ### Method 3: MCP Discovery
 
-Point your agent at the MCP server (`mcp-server/server.py`) and use the `list_skills` / `retrieve_skill` tools to dynamically load skills.
+Run the MCP server via `uvx skills-mcp-server@latest` and use the `list_skills` / `retrieve_skill` tools to dynamically load skills.
 
 ## Skill Structure
 

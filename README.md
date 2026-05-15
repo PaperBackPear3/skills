@@ -34,8 +34,8 @@ Or point your agent at the MCP server for dynamic skill discovery:
 {
   "mcpServers": {
     "skills": {
-      "command": "python3",
-      "args": ["<path-to-repo>/mcp-server/server.py"]
+      "command": "uvx",
+      "args": ["skills-mcp-server@latest"]
     }
   }
 }
@@ -59,7 +59,7 @@ Or point your agent at the MCP server for dynamic skill discovery:
 
 ### MCP Server
 
-The MCP server (`mcp-server/server.py`) exposes skills as tools, resources, and prompts — making them discoverable by any MCP-compatible agent without manual installation.
+The MCP server (published as `skills-mcp-server` via uvx) exposes skills as tools, resources, and prompts — making them discoverable by any MCP-compatible agent without manual installation.
 
 ## Repository Structure
 

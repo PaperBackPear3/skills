@@ -22,5 +22,4 @@ Repository = "https://github.com/PaperBackPear3/skills"
 skills-mcp-server = "server:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["."]
-only-include = ["server.py"]
+force-include = {"server.py" = "server.py"}

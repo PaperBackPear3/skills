@@ -23,4 +23,8 @@ Repository = "https://github.com/PaperBackPear3/awesome-agent-toolkits"
 awesome-agent-toolkits-mcp-server = "server:main"
 
 [tool.hatch.build.targets.wheel]
-force-include = {"server.py" = "server.py"}
+force-include = {
+  "server.py" = "server.py",
+  "_discovery.py" = "_discovery.py",
+  "_registration.py" = "_registration.py"
+}

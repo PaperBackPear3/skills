@@ -36,8 +36,12 @@ async def run_tool_script(script: Path, args: list[str] | None = None) -> str:
     )
     stdout, stderr = await proc.communicate()
     if proc.returncode != 0:
-        error_msg = stderr.decode().strip() or f"Script exited with code {proc.returncode}"
-        return json.dumps({"error": True, "message": error_msg, "exit_code": proc.returncode})
+        error_msg = (
+            stderr.decode().strip() or f"Script exited with code {proc.returncode}"
+        )
+        return json.dumps(
+            {"error": True, "message": error_msg, "exit_code": proc.returncode}
+        )
     return stdout.decode()
 
 
@@ -48,6 +52,8 @@ async def run_tool_script(script: Path, args: list[str] | None = None) -> str:
 async def list_skills() -> str:
     """List all available skills with their names, categories, and descriptions."""
     skills = []
+    if not SKILLS_DIR.is_dir():
+        return json.dumps([])
     for skill_path in SKILLS_DIR.rglob("SKILL.md"):
         content = skill_path.read_text()
         if content.startswith("---"):
@@ -55,7 +61,9 @@ async def list_skills() -> str:
                 end = content.index("---", 3)
                 frontmatter = content[3:end]
                 name_match = re.search(r"^name:\s*(.+)$", frontmatter, re.MULTILINE)
-                desc_match = re.search(r"description:\s*>?\s*\n?((?:\s+.+\n?)+)", frontmatter)
+                desc_match = re.search(
+                    r"description:\s*>?\s*\n?((?:\s+.+\n?)+)", frontmatter
+                )
                 if name_match:
                     # Derive category from path: skills/<category>/<skill>/SKILL.md
                     rel = skill_path.relative_to(SKILLS_DIR)
@@ -66,7 +74,9 @@ async def list_skills() -> str:
                         "path": str(rel.parent),
                     }
                     if desc_match:
-                        skill_info["description"] = " ".join(desc_match.group(1).split())
+                        skill_info["description"] = " ".join(
+                            desc_match.group(1).split()
+                        )
                     skills.append(skill_info)
             except ValueError:
                 continue
@@ -82,7 +92,9 @@ async def retrieve_skill(name: str) -> str:
             try:
                 end = content.index("---", 3)
                 frontmatter = content[3:end]
-                if re.search(rf'^name:\s*{re.escape(name)}\s*$', frontmatter, re.MULTILINE):
+                if re.search(
+                    rf"^name:\s*{re.escape(name)}\s*$", frontmatter, re.MULTILINE
+                ):
                     return content
             except ValueError:
                 continue
@@ -94,6 +106,8 @@ async def retrieve_skill(name: str) -> str:
 
 def _discover_and_register_tools():
     """Scan skills for mcp_tools.json and register tools dynamically."""
+    if not SKILLS_DIR.is_dir():
+        return
     seen = set()
     for tools_manifest in SKILLS_DIR.rglob("tools/mcp_tools.json"):
         skill_dir = tools_manifest.parent.parent
@@ -159,6 +173,8 @@ def _register_dynamic_tool(
 
 def _discover_and_register_resources():
     """Scan skills for references/ and assets/ files and register as resources."""
+    if not SKILLS_DIR.is_dir():
+        return
     for skill_path in SKILLS_DIR.rglob("SKILL.md"):
         skill_dir = skill_path.parent
         rel = skill_dir.relative_to(SKILLS_DIR)
@@ -169,7 +185,13 @@ def _discover_and_register_resources():
         refs_dir = skill_dir / "references"
         if refs_dir.is_dir():
             for ref_file in refs_dir.iterdir():
-                if ref_file.is_file() and ref_file.suffix in (".md", ".json", ".yaml", ".yml", ".txt"):
+                if ref_file.is_file() and ref_file.suffix in (
+                    ".md",
+                    ".json",
+                    ".yaml",
+                    ".yml",
+                    ".txt",
+                ):
                     uri = f"skills://{category}/{skill_name}/references/{ref_file.name}"
                     _register_resource(uri, ref_file)
 
@@ -200,6 +222,8 @@ def _register_resource(uri: str, file_path: Path):
 
 def _discover_and_register_prompts():
     """Scan skills for mcp_prompts.json and register prompts dynamically."""
+    if not SKILLS_DIR.is_dir():
+        return
     seen = set()
     for prompts_manifest in SKILLS_DIR.rglob("tools/mcp_prompts.json"):
         skill_dir = prompts_manifest.parent.parent
@@ -224,7 +248,9 @@ def _discover_and_register_prompts():
             )
 
 
-def _register_dynamic_prompt(name: str, description: str, template: str, params: list[dict]):
+def _register_dynamic_prompt(
+    name: str, description: str, template: str, params: list[dict]
+):
     """Register a single dynamic prompt with the MCP server."""
 
     def prompt_fn(**kwargs) -> str:
@@ -257,10 +283,24 @@ def main():
     elif "SKILLS_DIR" in os.environ:
         SKILLS_DIR = Path(os.environ["SKILLS_DIR"])
     else:
-        SKILLS_DIR = REPO_ROOT / "skills"
+        # When installed via uvx the repo root doesn't exist on the host machine.
+        # Prefer a user-level skills directory; fall back to the repo path in dev.
+        user_skills = Path.home() / ".agents" / "skills"
+        repo_skills = REPO_ROOT / "skills"
+        if user_skills.is_dir():
+            SKILLS_DIR = user_skills
+        elif repo_skills.is_dir():
+            SKILLS_DIR = repo_skills
+        else:
+            SKILLS_DIR = user_skills  # will be empty; discovery finds nothing
 
     if not SKILLS_DIR.is_dir():
-        parser.error(f"Skills directory does not exist: {SKILLS_DIR}")
+        print(
+            f"Warning: skills directory '{SKILLS_DIR}' does not exist. "
+            "No skills will be available. "
+            "Use --skills-dir or set SKILLS_DIR to point at your skills directory.",
+            file=sys.stderr,
+        )
 
     _discover_and_register_tools()
     _discover_and_register_resources()

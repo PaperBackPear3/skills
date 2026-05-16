@@ -18,9 +18,9 @@ description: >
   GitHub Pages configuration, or repository settings unrelated to Actions.
 version: 1
 requires_tools:
-  - devops__gha_scan_workflows
-  - devops__gha_validate_workflow
-  - devops__gha_scan_ci_config
+  - devops__gha_list_workflows
+  - devops__gha_validate
+  - devops__ci_detect_configs
 requires_mcp:
   - github
 tags: [github-actions, ci-cd, pipelines, devops, deployment, migration]
@@ -180,9 +180,9 @@ If issues found, fix them (with user confirmation) before proceeding.
 
 After all items addressed, print:
 
-| Workflow | File | Action | Environments | Status |
-| -------- | ---- | ------ | ------------ | ------ |
-| ... | .github/workflows/... | created/updated/migrated | dev,staging,prod | ✅ done / ⏭️ skipped |
+| Workflow | File                  | Action                   | Environments     | Status               |
+| -------- | --------------------- | ------------------------ | ---------------- | -------------------- |
+| ...      | .github/workflows/... | created/updated/migrated | dev,staging,prod | ✅ done / ⏭️ skipped |
 
 If migration, also show:
 

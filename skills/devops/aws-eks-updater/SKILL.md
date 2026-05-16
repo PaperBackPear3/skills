@@ -14,10 +14,10 @@ description: >
   the word "EKS" when context (eksctl, aws-auth configmap, terraform `aws_eks_*`) is clear.
 version: 1
 requires_tools:
-  - devops__eks_inventory_addons
-  - devops__eks_scan_terraform
-  - devops__inventory_helm
-  - devops__check_prereqs
+  - devops__eks_list_addons
+  - devops__eks_find_terraform
+  - devops__eks_helm_list_releases
+  - devops__eks_verify_environment
 requires_mcp:
   - terraform
   - github

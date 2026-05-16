@@ -1,27 +1,51 @@
 {
   "tools": [
     {
-      "name": "gha_scan_workflows",
+      "name": "gha_list_workflows",
+      "aliases": [
+        "gha_scan_workflows"
+      ],
       "script": "scan_workflows.py",
-      "description": "Scan existing GitHub Actions workflow files and report their structure (triggers, jobs, actions, environments, secrets).",
+      "description": "List GitHub Actions workflow files and summarize their structure (triggers, jobs, referenced actions, environments, secrets). Returns structured JSON.",
       "params": [
-        { "name": "root_dir", "flag": "--root-dir", "required": true, "description": "Repository root directory to scan" }
+        {
+          "name": "root_dir",
+          "flag": "--root-dir",
+          "required": true,
+          "description": "Repository root to scan for .github/workflows/"
+        }
       ]
     },
     {
-      "name": "gha_validate_workflow",
+      "name": "gha_validate",
+      "aliases": [
+        "gha_validate_workflow"
+      ],
       "script": "validate_workflow.py",
-      "description": "Validate a GitHub Actions workflow YAML file for correctness, security best practices, and common pitfalls.",
+      "description": "Validate a GitHub Actions workflow YAML for structural correctness, security best practices, and common pitfalls. Returns findings with severity.",
       "params": [
-        { "name": "file", "flag": "--file", "required": true, "description": "Path to the workflow YAML file to validate" }
+        {
+          "name": "file",
+          "flag": "--file",
+          "required": true,
+          "description": "Path to the workflow YAML file to validate"
+        }
       ]
     },
     {
-      "name": "gha_scan_ci_config",
+      "name": "ci_detect_configs",
+      "aliases": [
+        "gha_scan_ci_config"
+      ],
       "script": "scan_ci_config.py",
-      "description": "Detect and parse CI/CD configuration files from other systems (Jenkins, GitLab CI, CircleCI, Azure Pipelines) for migration analysis.",
+      "description": "Detect and parse CI/CD configs from other systems (Jenkins, GitLab CI, CircleCI, Azure Pipelines). Returns parsed structure for migration analysis.",
       "params": [
-        { "name": "root_dir", "flag": "--root-dir", "required": true, "description": "Repository root directory to scan for CI configs" }
+        {
+          "name": "root_dir",
+          "flag": "--root-dir",
+          "required": true,
+          "description": "Repository root to scan for CI configuration files"
+        }
       ]
     }
   ]

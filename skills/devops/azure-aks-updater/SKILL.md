@@ -14,10 +14,10 @@ description: >
   "AKS" when context (az aks, azurerm_kubernetes_cluster, terraform `azurerm_aks_*`) is clear.
 version: 1
 requires_tools:
-  - devops__aks_inventory_addons
-  - devops__aks_scan_terraform
-  - devops__inventory_helm
-  - devops__check_prereqs
+  - devops__aks_list_addons
+  - devops__aks_find_terraform
+  - devops__aks_helm_list_releases
+  - devops__aks_verify_environment
 requires_mcp:
   - terraform
   - github

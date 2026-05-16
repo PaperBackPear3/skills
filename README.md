@@ -6,18 +6,34 @@ Skills can encode expertise from **any domain**: DevOps, security, data engineer
 
 ## Quick Start
 
-### Claude Code
+### Claude Code / GitHub Copilot
+
+Add the Marketplace
+
+```bash
+/plugin marketplace add PaperBackPear3/awesome-agent-toolkits
+```
 
 Install a plugin (e.g. the DevOps plugin — one of the available plugins):
 
 ```bash
-claude plugin add github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core
+plugin add github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core
+```
+
+or browse the Marketplace
+
+```bash
+/plugin marketplace browse awesome-agent-toolkit
 ```
 
 ### Codex
 
 ```json
-{ "plugins": ["github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core"] }
+{
+  "plugins": [
+    "github:PaperBackPear3/awesome-agent-toolkits/plugins/devops-core"
+  ]
+}
 ```
 
 ### Manual (any agent)
@@ -45,16 +61,16 @@ Or point your agent at the MCP server for dynamic skill discovery:
 
 ### Plugins
 
-| Plugin | Category | Description | Status |
-|--------|----------|-------------|--------|
-| `devops-core` | DevOps | Kubernetes cluster update skills (EKS + AKS) with MCP tools | ✅ Available |
-| _more coming_ | Security, Data, Finance… | Community and first-party plugins | 🚧 Planned |
+| Plugin        | Category                 | Description                                                 | Status       |
+| ------------- | ------------------------ | ----------------------------------------------------------- | ------------ |
+| `devops-core` | DevOps                   | Kubernetes cluster update skills (EKS + AKS) with MCP tools | ✅ Available |
+| _more coming_ | Security, Data, Finance… | Community and first-party plugins                           | 🚧 Planned   |
 
 ### Skills (via `devops-core`)
 
-| Skill | Description |
-|-------|-------------|
-| [`aws-eks-updater`](skills/devops/aws-eks-updater/SKILL.md) | Interactive, safety-first EKS cluster upgrades |
+| Skill                                                           | Description                                    |
+| --------------------------------------------------------------- | ---------------------------------------------- |
+| [`aws-eks-updater`](skills/devops/aws-eks-updater/SKILL.md)     | Interactive, safety-first EKS cluster upgrades |
 | [`azure-aks-updater`](skills/devops/azure-aks-updater/SKILL.md) | Interactive, safety-first AKS cluster upgrades |
 
 ### MCP Server
@@ -81,14 +97,14 @@ docs/                   # Documentation
 
 ## Documentation
 
-| Doc | What it covers |
-|-----|---------------|
-| [Installation Guide](docs/INSTALL.md) | All install methods (plugin, MCP, manual, symlink) |
-| [Contributing: Add New Stuff](docs/CONTRIBUTING.md) | How to add skills, tools, plugins, rules |
-| [Quick Reference Guide](docs/GUIDE.md) | Architecture, concepts, conventions |
-| [Best Practices](docs/BEST_PRACTICES.md) | MCP vs Agents vs Tools vs Skills deep-dive |
-| [MCP Server](mcp-server/README.md) | Server setup and available tools |
-| [Agent Rules](rules/devops-agent-rules.md) | Behavioral guardrails |
+| Doc                                                 | What it covers                                     |
+| --------------------------------------------------- | -------------------------------------------------- |
+| [Installation Guide](docs/INSTALL.md)               | All install methods (plugin, MCP, manual, symlink) |
+| [Contributing: Add New Stuff](docs/CONTRIBUTING.md) | How to add skills, tools, plugins, rules           |
+| [Quick Reference Guide](docs/GUIDE.md)              | Architecture, concepts, conventions                |
+| [Best Practices](docs/BEST_PRACTICES.md)            | MCP vs Agents vs Tools vs Skills deep-dive         |
+| [MCP Server](mcp-server/README.md)                  | Server setup and available tools                   |
+| [Agent Rules](rules/devops-agent-rules.md)          | Behavioral guardrails                              |
 
 ## License
 

@@ -1,17 +1,40 @@
 {
   "name": "awesome-agent-toolkits",
-  "interface": { "displayName": "Agent Skills Toolkit" },
+  "interface": {
+    "displayName": "Agent Skills Toolkit"
+  },
   "plugins": [
     {
       "name": "devops-core",
-      "source": { "source": "local", "path": "./plugins/devops-core" },
-      "policy": { "installation": "AVAILABLE" },
+      "source": {
+        "source": "local",
+        "path": "./plugins/devops-core"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
       "category": "DevOps"
     },
     {
       "name": "plugin-factory",
-      "source": { "source": "local", "path": "./plugins/plugin-factory" },
-      "policy": { "installation": "AVAILABLE" },
+      "source": {
+        "source": "local",
+        "path": "./plugins/plugin-factory"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Meta"
+    },
+    {
+      "name": "plugin-manager",
+      "source": {
+        "source": "local",
+        "path": "./plugins/plugin-manager"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
       "category": "Meta"
     }
   ]

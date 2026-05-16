@@ -4,7 +4,9 @@
     "description": "A framework for discoverable agent skills — package business logic as composable, MCP-served capabilities",
     "version": "1.0.0"
   },
-  "owner": { "name": "PaperBackPear3" },
+  "owner": {
+    "name": "PaperBackPear3"
+  },
   "plugins": [
     {
       "name": "devops-core",
@@ -12,7 +14,12 @@
       "source": "./plugins/devops-core",
       "version": "1.0.0",
       "category": "devops",
-      "keywords": ["devops", "kubernetes", "eks", "aks"]
+      "keywords": [
+        "devops",
+        "kubernetes",
+        "eks",
+        "aks"
+      ]
     },
     {
       "name": "plugin-factory",
@@ -20,7 +27,27 @@
       "source": "./plugins/plugin-factory",
       "version": "1.0.0",
       "category": "meta",
-      "keywords": ["meta", "scaffolding", "plugin", "skill", "creation"]
+      "keywords": [
+        "meta",
+        "scaffolding",
+        "plugin",
+        "skill",
+        "creation"
+      ]
+    },
+    {
+      "name": "plugin-manager",
+      "description": "Discover, install, and verify skills and plugins from the registry",
+      "source": "./plugins/plugin-manager",
+      "version": "1.0.0",
+      "category": "meta",
+      "keywords": [
+        "meta",
+        "install",
+        "plugin",
+        "skill",
+        "setup"
+      ]
     }
   ]
 }

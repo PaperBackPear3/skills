@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "awesome-agent-toolkits-mcp-server"
-version = "0.1.1"
+version = "0.1.3"
 description = "Auto-discovering MCP server for agent skills"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -23,9 +23,8 @@ Repository = "https://github.com/PaperBackPear3/awesome-agent-toolkits"
 awesome-agent-toolkits-mcp-server = "server:main"
 
 [tool.hatch.build.targets.wheel]
-force-include = {
-  "server.py" = "server.py",
-  "_discovery.py" = "_discovery.py",
-  "_registration.py" = "_registration.py",
-  "../skills/meta/plugin-manager" = "skills/meta/plugin-manager"
-}
+
+[tool.hatch.build.targets.wheel.force-include]
+"server.py" = "server.py"
+"_discovery.py" = "_discovery.py"
+"_registration.py" = "_registration.py"

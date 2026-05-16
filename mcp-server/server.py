@@ -83,14 +83,16 @@ def _resolve_skills_dir(args: argparse.Namespace) -> Path:
         return Path(args.skills_dir)
     if "SKILLS_DIR" in os.environ:
         return Path(os.environ["SKILLS_DIR"])
-    # When installed via uvx the repo root doesn't exist on the host machine.
-    # Prefer a user-level skills directory; fall back to the repo path in dev.
+    # Resolution order:
+    # 1. ~/.agents/skills    — user's personal skills (highest priority, allows overrides)
+    # 2. <package>/skills    — bundled with the wheel; present when installed via uvx/pip
+    # 3. <repo-root>/skills  — dev mode, running directly from source
     user_skills = Path.home() / ".agents" / "skills"
+    bundled_skills = Path(__file__).resolve().parent / "skills"
     repo_skills = REPO_ROOT / "skills"
-    if user_skills.is_dir():
-        return user_skills
-    if repo_skills.is_dir():
-        return repo_skills
+    for candidate in (user_skills, bundled_skills, repo_skills):
+        if candidate.is_dir():
+            return candidate
     return user_skills  # will be empty; discovery finds nothing
 
 

@@ -4,6 +4,11 @@
 Outputs a JSON array where each entry contains at minimum: name, path.
 Additional fields (description, version, author, category) are included when
 found in the plugin's manifest files.
+
+Auto-detection order (when no flags are given):
+  1. .agents/plugins/marketplace.json  (Codex / general marketplace)
+  2. .claude-plugin/marketplace.json   (Claude Code marketplace)
+  3. plugins/                          (walk the directory directly)
 """
 
 import argparse
@@ -11,12 +16,18 @@ import json
 import sys
 from pathlib import Path
 
+# Known marketplace file locations, in preference order
+_MARKETPLACE_CANDIDATES = [
+    ".agents/plugins/marketplace.json",
+    ".claude-plugin/marketplace.json",
+]
+
 
 def _find_repo_root(start: Path) -> Path | None:
-    """Walk up from start until a directory containing plugins/ is found."""
+    """Walk up from start until a repo root is found (contains skills/ or plugins/)."""
     current = start
     for _ in range(10):
-        if (current / "plugins").is_dir():
+        if (current / "skills").is_dir() or (current / "plugins").is_dir():
             return current
         if current.parent == current:
             break
@@ -61,6 +72,30 @@ def _list_from_marketplace(marketplace_path: Path) -> list[dict]:
         return []
 
 
+def _autodetect(start: Path) -> list[dict]:
+    """Try known marketplace files first, then fall back to walking plugins/."""
+    repo_root = _find_repo_root(start)
+    if repo_root is None:
+        print(
+            "No repo root found. Use --plugins-dir or --marketplace.", file=sys.stderr
+        )
+        return []
+
+    # Prefer curated marketplace files (they have richer metadata)
+    for rel in _MARKETPLACE_CANDIDATES:
+        candidate = repo_root / rel
+        if candidate.exists():
+            return _list_from_marketplace(candidate)
+
+    # Fall back to walking the plugins directory
+    plugins_dir = repo_root / "plugins"
+    if plugins_dir.is_dir():
+        return _list_from_plugins_dir(plugins_dir)
+
+    print("No marketplace file or plugins/ directory found.", file=sys.stderr)
+    return []
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="List available plugins")
     parser.add_argument("--plugins-dir", help="Path to plugins directory")
@@ -72,17 +107,13 @@ def main() -> None:
     elif args.plugins_dir:
         plugins = _list_from_plugins_dir(Path(args.plugins_dir))
     else:
-        repo_root = _find_repo_root(Path(__file__).resolve())
-        if repo_root and (repo_root / "plugins").is_dir():
-            plugins = _list_from_plugins_dir(repo_root / "plugins")
-        else:
-            print(
-                "No plugins directory found. Use --plugins-dir or --marketplace.",
-                file=sys.stderr,
-            )
-            plugins = []
+        plugins = _autodetect(Path(__file__).resolve())
 
     print(json.dumps(plugins, indent=2))
+
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":

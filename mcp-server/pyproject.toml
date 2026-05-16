@@ -26,5 +26,6 @@ awesome-agent-toolkits-mcp-server = "server:main"
 force-include = {
   "server.py" = "server.py",
   "_discovery.py" = "_discovery.py",
-  "_registration.py" = "_registration.py"
+  "_registration.py" = "_registration.py",
+  "../skills/meta/plugin-manager" = "skills/meta/plugin-manager"
 }
